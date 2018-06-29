@@ -27,7 +27,6 @@
 
     <modules>
         <module>cars-backend-mvc-mongodb</module>
-        <module>cars-backend-reactive</module>
         <module>cars-frontend</module>
     </modules>
 
