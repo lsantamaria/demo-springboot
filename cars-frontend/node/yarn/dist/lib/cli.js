@@ -91888,7 +91888,7 @@ module.exports = convert;
 var conversions = __webpack_require__(242);
 
 /*
-	this function routes a model to all other models.
+	this function routes a domain to all other models.
 
 	all functions that are routed have a property `.conversion` attached
 	to the returned synthetic function. This property is an array
@@ -91973,7 +91973,7 @@ module.exports = function (fromModel) {
 		var node = graph[toModel];
 
 		if (node.parent === null) {
-			// no possible conversion, or this node is the source model.
+			// no possible conversion, or this node is the source domain.
 			continue;
 		}
 
