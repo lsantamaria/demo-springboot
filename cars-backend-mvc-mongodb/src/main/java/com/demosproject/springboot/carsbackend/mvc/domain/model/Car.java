@@ -17,4 +17,9 @@ public class Car {
     private String color;
     private int power;
 
+    public Car(String brand, String color, int power) {
+        this.brand = brand;
+        this.color = color;
+        this.power = power;
+    }
 }
