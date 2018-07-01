@@ -33,41 +33,31 @@ public class BootstrapCLR implements CommandLineRunner {
         raceRepositoryMongoDB.deleteAll();
         userRepositoryMongoDB.deleteAll();
 
+        Car honda = new Car("honda","blue",75);
+        Car mazda = new Car("seat","black",34);
 
-        Car honda = new Car(null, "honda","blue",75);
-        Car mazda = new Car(null,"seat","black",34);
-
-        Car ford = new Car(null,"ford","blue",75);
-        Car audi = new Car(null,"audi","black",34);
+        Car ford = new Car("ford","blue",75);
+        Car audi = new Car("audi","black",34);
 
         carRepositoryMongoDB.save(honda);
         carRepositoryMongoDB.save(mazda);
         carRepositoryMongoDB.save(ford);
         carRepositoryMongoDB.save(audi);
 
-        User marcelus = new User(null, "Marcelus",asList(honda,mazda));
+        User marcelus = new User( "Marcelus",asList(honda,mazda));
         userRepositoryMongoDB.save(marcelus);
 
         User albert = new User();
-        albert.setId(null);
         albert.setName("albert");
         albert.setCars(asList(ford,audi));
         userRepositoryMongoDB.save(albert);
 
         Race race = new Race();
-        race.setName("CARRERA1");
+        race.setName("RACE-1");
         race.setStartDate(Calendar.getInstance().getTime());
         race.setUsers(asList(marcelus,albert));
 
         raceRepositoryMongoDB.save(race);
-
-
-
-        List<Race> races = raceRepositoryMongoDB.findAll();
-
-
-        System.out.println("");
-
 
     }
 }
