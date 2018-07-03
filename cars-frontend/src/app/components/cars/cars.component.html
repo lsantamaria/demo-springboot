@@ -1,0 +1,67 @@
+
+<app-edit-cars></app-edit-cars>
+
+
+<div class="example-container mat-elevation-z8">
+
+  <div></div>
+  <button mat-raised-button color="primary" (click)="removeSelectedRows()">
+    Remove a car or all
+  </button>
+<div></div>
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <!-- id Column -->
+  <!--  <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>-->
+
+    <!-- brand Column -->
+    <ng-container matColumnDef="brand">
+      <mat-header-cell *matHeaderCellDef> Brand </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.brand}} </mat-cell>
+    </ng-container>
+
+    <!-- power Column -->
+    <ng-container matColumnDef="power">
+      <mat-header-cell *matHeaderCellDef> Power </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.power}} </mat-cell>
+    </ng-container>
+
+    <!-- color Column -->
+    <ng-container matColumnDef="color">
+      <mat-header-cell *matHeaderCellDef> Color </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.color}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+             (click)="selection.toggle(row)">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [pageSize]="3"
+                 [pageSizeOptions]="[5, 10, 20]"
+  >
+  </mat-paginator>
+
+</div>
+
