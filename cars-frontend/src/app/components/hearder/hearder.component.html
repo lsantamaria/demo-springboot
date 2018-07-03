@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+
+  <mat-toolbar-row >
+    <i class="material-icons">
+      local_car_wash
+    </i>
+    <span>CarsAppTest</span>
+ <div *ngIf=user>
+    <button mat-button routerLink="/cars" >Cars</button>
+    <button mat-button routerLink="/races" >Races</button>
+    <button mat-button  routerLink="/users" >Users</button>
+    </div>
+    <span class="example-fill-remaining-space"></span>
+
+
+    <div *ngIf=!user>
+    <button mat-button>About</button>
+    <button mat-button >Services</button>
+    <button mat-button  routerLink="/login" >Login</button>
+    </div>
+
+    <div *ngIf=user>
+
+      <button mat-button  (click)=logout() >Logout</button>
+    </div>
+
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
