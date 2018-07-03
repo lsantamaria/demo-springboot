@@ -59,8 +59,21 @@ public class BootstrapCLR implements CommandLineRunner {
         race.setStartDate(Calendar.getInstance().getTime());
         race.setUsers(asList(marcelus,albert));
 
-        raceRepositoryMongoDB.save(race);
 
+        Race race2 = new Race();
+        race2.setName("CARRERA......2");
+        race2.setStartDate(Calendar.getInstance().getTime());
+        race2.setUsers(asList(marcelus,albert));
+
+
+        Race race3 = new Race();
+        race3.setName("CARRERA......3");
+        race3.setStartDate(Calendar.getInstance().getTime());
+        race3.setUsers(asList(marcelus,albert));
+
+        raceRepositoryMongoDB.save(race);
+        raceRepositoryMongoDB.save(race2);
+        raceRepositoryMongoDB.save(race3);
 
 
         List<Race> races = raceRepositoryMongoDB.findAll();

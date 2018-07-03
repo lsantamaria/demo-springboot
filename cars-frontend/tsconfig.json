@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "downlevelIteration": true,
     "allowJs": true,
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
@@ -12,6 +13,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
+    "types": ["node"],
     "typeRoots": [
       "node_modules/@types"
     ],

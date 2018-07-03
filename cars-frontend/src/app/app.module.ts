@@ -7,6 +7,7 @@ import {StoreModule} from "@ngrx/store";
 
 
 
+
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -58,6 +59,7 @@ import { CarsComponent } from './components/cars/cars.component';
 import { RacesComponent } from './components/races/races.component';
 import {reducers} from "./app.store";
 import {SharedService} from "./services/shared.service";
+import { EditCarsComponent } from './components/cars/edit-cars/edit-cars.component';
 
 
 
@@ -79,7 +81,8 @@ const appRoutes: Routes = [
     HearderComponent,
     UsersComponent,
     CarsComponent,
-    RacesComponent
+    RacesComponent,
+    EditCarsComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
