@@ -1,6 +1,6 @@
 package com.demosproject.springboot.carsbackend.jpa.services;
 
-import com.demosproject.springboot.carsbackend.jpa.domain.model.Car;
+import com.demosproject.springboot.carsbackend.jpa.domain.Car;
 import com.demosproject.springboot.carsbackend.jpa.repositories.CarRepositoryJPA;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +25,7 @@ public class CarServiceJPA {
         return this.carRepositoryJPA.findAll();
     }
 
-    public Optional<Car> getCarById(Integer id){
+    public Optional<Car> getCarById(Long id){
         return this.carRepositoryJPA.findById(id);
     }
 

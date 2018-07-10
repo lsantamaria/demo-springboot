@@ -29,7 +29,7 @@ export function userReducer(state: any  = initialState, action: loginActions.Log
 
 
     case loginActions.USER_LOGOUT:
-      return {...state, user: action.user, loading:  false};
+      return initialState;
 
 
     case loginActions.USER_ADD:

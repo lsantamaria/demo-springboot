@@ -17,7 +17,7 @@ import * as carActions from "../../stores/car.action";
 export class CarsComponent  {
 
 
-  cars: Car[] = [{brand:"honda",color:"red",power: 22325}];
+  cars: Car[] = [{brand:"",color:"",power: null}];
   displayedColumns = ['select', 'brand', 'color','power'];
   data = Object.assign(this.cars);
   dataSource = new MatTableDataSource<Element>(this.data);

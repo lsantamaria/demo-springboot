@@ -21,6 +21,9 @@ export function raceReducer(state: any  = initialState, action: raceActions.Race
     case raceActions.RACE_ADD:
       return {...state, races: [...state.races, action.payload]};
 
+    case raceActions.RACES_EMPTY:
+      return initialState;
+
     case raceActions.RACES_ADD:
       return {...state, races: [...state.races, ...action.payload]};
 

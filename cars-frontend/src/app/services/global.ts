@@ -1,6 +1,6 @@
 export var GLOBAL ={
 
-  url:'http://localhost:8080',
+  url:'http://localhost:8080/jpa',
 
   // isham url:'http://192.168.1.147:8081/api/',
 

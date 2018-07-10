@@ -9,7 +9,7 @@ export interface CarState {
 
 const initialState: CarState ={
   car:null,
-  cars:[{brand:'honda', color:'azul',  power:23},{brand:'citroen', color:'azul',  power:300},{brand:'bmw', color:'gris',  power:4000},{brand:'toyota', color:'negro',  power:235},{brand:'mercedes', color:'gris', power:323},{brand:'mazda', color:'rojo', power:236},{brand:'ola', color:'lala',  power:23},{brand:'ola', color:'lala', power:23}],
+  cars:[],
 }
 
 
@@ -19,7 +19,10 @@ export function carReducer(state: any  = initialState, action: carActions.CarAct
   switch (action.type) {
 
     case carActions.CAR_ADD:
-      return {...state, cars: [...state.cars, action.payload]};
+    return {...state, cars: [...state.cars, action.payload]};
+
+    case carActions.CARS_EMPTY:
+      return initialState;
 
     case carActions.CARS_ADD:
       return {...state, cars: [...state.cars, ...action.payload]};

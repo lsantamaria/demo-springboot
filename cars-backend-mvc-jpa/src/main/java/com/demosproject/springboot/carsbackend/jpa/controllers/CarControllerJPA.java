@@ -1,6 +1,6 @@
 package com.demosproject.springboot.carsbackend.jpa.controllers;
 
-import com.demosproject.springboot.carsbackend.jpa.domain.model.Car;
+import com.demosproject.springboot.carsbackend.jpa.domain.Car;
 import com.demosproject.springboot.carsbackend.jpa.services.CarServiceJPA;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,7 @@ public class CarControllerJPA {
 
     @GetMapping(value = "/cars/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Optional<Car> getCarById(@PathVariable String id){
-        return carServiceJPA.getCarById(Integer.parseInt(id));
+        return carServiceJPA.getCarById(Long.parseLong(id));
     }
 
     @PostMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE)

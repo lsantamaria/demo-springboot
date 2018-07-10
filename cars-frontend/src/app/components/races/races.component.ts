@@ -51,7 +51,10 @@ export class RacesComponent implements OnInit, OnDestroy {
   OpenTab(){
 
   }
-
+  onOpenMenuView(idRace:any){
+     let id = idRace ? idRace : null;
+  this.router.navigate(['/races/users/',id]);
+  }
 
   onSelectChange(event) {
     if (event.index == 1) {

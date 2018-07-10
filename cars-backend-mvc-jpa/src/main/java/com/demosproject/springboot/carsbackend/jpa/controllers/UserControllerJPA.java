@@ -1,6 +1,6 @@
 package com.demosproject.springboot.carsbackend.jpa.controllers;
 
-import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.User;
 import com.demosproject.springboot.carsbackend.jpa.services.UserServiceJPA;
 import java.util.List;
 import org.springframework.http.MediaType;

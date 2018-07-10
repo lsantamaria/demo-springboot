@@ -1,7 +1,7 @@
 package com.demosproject.springboot.carsbackend.jpa.services;
 
 
-import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.User;
 import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class UserServiceJPA {
 
     }
 
-    public Optional<User> getUserById(Integer id){
+    public Optional<User> getUserById(Long id){
         return this.userRepositoryJPA.findById(id);
     }
 
