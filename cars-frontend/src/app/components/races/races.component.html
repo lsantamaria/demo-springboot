@@ -1,33 +1,52 @@
+<app-edit-race></app-edit-race>
 
-<mat-tab-group [(selectedIndex)]="selectedTabIndex">
+<mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectChange)="onSelectChange($event)">
   <mat-tab label="All">
     <!--<ng-template matTabContent>-->
-      <mat-list role="list" >
 
-        <a  role="listitem" *ngFor="let race of races">
-          <h3 mat-line >{{ race.name }}</h3>
-          <h3 mat-line >{{ race.startDate  }}</h3>
 
-          <table matSort (matSortChange)="sortData($event)" >
-            <tr>
-              <th mat-sort-header="name">Car Brand</th>
-              <th mat-sort-header="calories">Color</th>
-              <th mat-sort-header="fat">Power (kw)</th>
-            </tr>
+    <mat-nav-list>
+      <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let race of races">
+        <div mat-line>
+          {{ race.name }}
+        </div>
+        <p mat-line>
+          {{race.startDate }}
+        </p>
+        <button mat-icon-button #menuTrigger="matMenuTrigger"   [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
 
-            <tr *ngFor="let user of races.users" >
-              <td>{{ user.name }}</td>
-              <td>{{user.cars}}</td>
-            </tr>
-          </table>
-        </a>
-      </mat-list>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onOpenMenu(race.name)">View race detail </button>
+        <button mat-menu-item (click)="onOpenMenu(race.name)">Add on my races</button>
+      </mat-menu>
+
+      </mat-list-item>
+    </mat-nav-list>
+
   <!--  </ng-template>-->
   </mat-tab>
-  <mat-tab label="My Races">
-    <ng-template matTabContent>
-      Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
-    </ng-template>
+  <mat-tab  (click)="OpenTab()" label="My Races">
+    <mat-nav-list>
+      <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let race2 of races">
+        <div mat-line>
+          {{ race2.name }}
+        </div>
+        <p mat-line>
+          {{race2.startDate }}
+        </p>
+        <button mat-icon-button #menuTrigger="matMenuTrigger"   [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onOpenMenu(race2.name)">View race detail </button>
+          <button mat-menu-item (click)="onOpenMenu(race2.name)">Add on my races</button>
+        </mat-menu>
+
+      </mat-list-item>
+    </mat-nav-list>
   </mat-tab>
 </mat-tab-group>
 

@@ -28,10 +28,15 @@ export class EditCarsComponent implements OnInit {
     if(this.brand && this.color && this.power !=null){
       this.store.dispatch(new carActions.AddAction(this.car));
     }
+    this.brand="";
+    this.color="";
+    this.power=null;
+
   }
 
-  addVarios(){
-    this.addMoreCars = [{brand:"asfaf",color:"afsasfaf",power:2},{brand:"asfaf",color:"afsasfaf",power:2}];
-    this.store.dispatch(new carActions.AddListAction(this.addMoreCars));
+  cancel(){
+    this.brand="";
+    this.color="";
+    this.power=null;
   }
 }

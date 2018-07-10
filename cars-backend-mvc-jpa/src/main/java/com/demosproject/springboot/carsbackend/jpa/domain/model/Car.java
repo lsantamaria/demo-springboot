@@ -1,18 +1,22 @@
-package com.demosproject.springboot.carsbackend.mvc.domain.model;
+package com.demosproject.springboot.carsbackend.jpa.domain.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.cglib.core.GeneratorStrategy;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
-@Document
+@Entity
 public class Car {
 
-    private String id;
+    @GeneratedValue
+    @Id
+    private long id;
     private String brand;
     private String color;
     private int power;

@@ -1,5 +1,3 @@
-import {User} from  "../models/user";
-
 import * as  carActions from './car.action'
 import {Car} from "../models/car";
 

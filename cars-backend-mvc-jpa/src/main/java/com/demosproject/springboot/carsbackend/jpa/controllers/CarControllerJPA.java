@@ -1,7 +1,7 @@
-package com.demosproject.springboot.carsbackend.mvc.controllers.mongodb;
+package com.demosproject.springboot.carsbackend.jpa.controllers;
 
-import com.demosproject.springboot.carsbackend.mvc.domain.model.Car;
-import com.demosproject.springboot.carsbackend.mvc.services.mongodb.CarServiceMongoDB;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Car;
+import com.demosproject.springboot.carsbackend.jpa.services.CarServiceJPA;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.MediaType;
@@ -12,27 +12,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/mongodb")
-public class CarControllerMongoDB {
+@RequestMapping("/jpa")
+public class CarControllerJPA {
 
-    private final CarServiceMongoDB carServiceMongoDB;
+    private final CarServiceJPA carServiceJPA;
 
-    public CarControllerMongoDB(CarServiceMongoDB CarServiceMongoDB){
-        this.carServiceMongoDB = CarServiceMongoDB;
+    public CarControllerJPA(CarServiceJPA carServiceJPA){
+        this.carServiceJPA = carServiceJPA;
     }
 
-    @GetMapping(value = "/cars", produces = MediaType .APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Car> getCars(){
-        return carServiceMongoDB.getCars();
+        return carServiceJPA.getCars();
     }
 
     @GetMapping(value = "/cars/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Optional<Car> getCarById(@PathVariable String id){
-        return carServiceMongoDB.getCarById(Integer.parseInt(id));
+        return carServiceJPA.getCarById(Integer.parseInt(id));
     }
 
     @PostMapping(value = "/cars", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveCar(@PathVariable Car car) {
-        carServiceMongoDB.saveCar(car);
+        carServiceJPA.saveCar(car);
     }
 }
