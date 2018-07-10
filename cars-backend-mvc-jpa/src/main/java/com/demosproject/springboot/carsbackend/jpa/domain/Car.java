@@ -11,9 +11,9 @@ import javax.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@Data
 @Entity
+@Data
+@NoArgsConstructor
 public class Car implements Serializable {
 
   @GeneratedValue
@@ -48,16 +48,15 @@ public class Car implements Serializable {
       return false;
     }
     Car car = (Car) o;
-    return id == car.id &&
-        power == car.power &&
-        Objects.equals(brand, car.brand) &&
-        Objects.equals(color, car.color) &&
-        Objects.equals(user, car.user);
+    return getId() == car.getId() &&
+        getPower() == car.getPower() &&
+        Objects.equals(getBrand(), car.getBrand()) &&
+        Objects.equals(getColor(), car.getColor());
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(id, brand, color, power, user);
+    return Objects.hash(id, brand, color, power);
   }
 }

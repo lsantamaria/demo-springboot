@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,19 +13,28 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@Data
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "USER")
 public class User implements Serializable {
 
   @Id
   @GeneratedValue
   private long id;
+
+  @Column
   private String name;
+
+  public User(String name, Set<Car> cars) {
+    this.name = name;
+    this.cars = cars;
+  }
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Car> cars = new HashSet<>();
@@ -32,10 +42,6 @@ public class User implements Serializable {
   @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<Race> races = new HashSet<>();
 
-  public User(String name, Set<Car> cars) {
-    this.name = name;
-    this.cars = cars;
-  }
 
   public void addCar(Car car) {
     cars.add(car);
@@ -57,14 +63,12 @@ public class User implements Serializable {
     User user = (User) o;
     return id == user.id &&
         Objects.equals(name, user.name) &&
-        Objects.equals(cars, user.cars) &&
-        Objects.equals(races, user.races);
+        Objects.equals(cars, user.cars);
   }
 
   @Override
   public int hashCode() {
-
-    return Objects.hash(id, name);
+    return Objects.hash(id, name, cars);
   }
 
   @Override
