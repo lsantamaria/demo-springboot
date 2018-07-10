@@ -20,7 +20,8 @@
 /nbproject/private/
 /build/
 /nbbuild/
-/dist/
+dist/
+node/yarn/dist/
 /nbdist/
 /.nb-gradle/
 

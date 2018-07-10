@@ -1,0 +1,49 @@
+
+<mat-tab-group [(selectedIndex)]="selectedTabIndex">
+  <mat-tab label="All">
+    <!--<ng-template matTabContent>-->
+      <mat-list role="list" >
+
+        <a  role="listitem" *ngFor="let race of races">
+          <h3 mat-line >{{ race.name }}</h3>
+          <h3 mat-line >{{ race.startDate  }}</h3>
+
+          <table matSort (matSortChange)="sortData($event)" >
+            <tr>
+              <th mat-sort-header="name">Car Brand</th>
+              <th mat-sort-header="calories">Color</th>
+              <th mat-sort-header="fat">Power (kw)</th>
+            </tr>
+
+            <tr *ngFor="let user of races.users" >
+              <td>{{ user.name }}</td>
+              <td>{{user.cars}}</td>
+            </tr>
+          </table>
+        </a>
+      </mat-list>
+  <!--  </ng-template>-->
+  </mat-tab>
+  <mat-tab label="My Races">
+    <ng-template matTabContent>
+      Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+
+
+<!--
+<mat-tab-group [(selectedIndex)]="selectedTabIndex">
+  <mat-tab label="Tab 1">
+    Tab 1 Content
+  </mat-tab>
+  <mat-tab label="Tab 2">
+    Tab 2 Content
+  </mat-tab>
+  <mat-tab label="Tab 3">
+    Tab 3 Content
+  </mat-tab>
+</mat-tab-group>
+
+https://stackblitz.com/edit/angular-material2-issue-wryjmh?file=app%2Fapp.component.ts
+-->
