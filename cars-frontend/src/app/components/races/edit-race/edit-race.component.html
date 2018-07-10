@@ -2,24 +2,27 @@
 
   <mat-card class="example-card" >
     <mat-card-header>
-      <mat-card-title >Add a Car</mat-card-title>
+      <mat-card-title >Add a rece</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form class="example-form">
 
         <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
           <mat-form-field fxFlex class="example-full-width">
-            <input matInput placeholder="brand" [(ngModel)]="brand" name="brand" >
+            <input matInput placeholder="Name" [(ngModel)]="name" name="name" >
           </mat-form-field>
+
+        <!--  <mat-form-field fxFlex class="example-full-width">
+            <input matInput placeholder="Start Date" [(ngModel)]="startDate" name="startDate">
+          </mat-form-field>-->
+
 
           <mat-form-field fxFlex class="example-full-width">
-            <input matInput placeholder="color" [(ngModel)]="color" name="color">
+            <input matInput [matDatepicker]="startDate" placeholder="Choose a Start date" [(ngModel)]="startDate2"  name="startDate2" >
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
           </mat-form-field>
 
-
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="power" [(ngModel)]="power" name="power">
-          </mat-form-field>
         </div>
 
         <div class="input-row">
@@ -40,8 +43,5 @@
     </mat-card-actions>
   </mat-card>
 </div>
-
-
-
 
 

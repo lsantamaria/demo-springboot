@@ -1,9 +1,10 @@
+/*
 package com.demosproject.springboot.carsbackend.jpa;
 
 import com.demosproject.springboot.carsbackend.jpa.controllers.RaceControllerJPA;
-import com.demosproject.springboot.carsbackend.jpa.domain.model.Car;
-import com.demosproject.springboot.carsbackend.jpa.domain.model.Race;
-import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.Car;
+import com.demosproject.springboot.carsbackend.jpa.domain.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.User;
 import com.demosproject.springboot.carsbackend.jpa.repositories.CarRepositoryJPA;
 import com.demosproject.springboot.carsbackend.jpa.repositories.RaceRepositoryJPA;
 import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
@@ -88,7 +89,9 @@ public class RaceControllerJPAIntegrationTest {
     public void whenFindRaces_thenReturnAllRaces() throws Exception {
 
         Instant instant = Instant.now();
-        /*ResponseEntity<Object[]> responseEntity = */
+        */
+/*ResponseEntity<Object[]> responseEntity = *//*
+
         testRestTemplate.getForEntity("/jpa/races", Object[].class);
         Instant instant1 = Instant.now();
 
@@ -104,3 +107,4 @@ public class RaceControllerJPAIntegrationTest {
     }
 
 }
+*/

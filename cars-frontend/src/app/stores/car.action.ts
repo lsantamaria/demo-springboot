@@ -1,11 +1,10 @@
 import  {Action } from  '@ngrx/store';
-import {Car} from "../models/car";
-
 
 export const CAR_ADD ='CAR_ADD';
 export const CARS_ADD ='CARS_ADD';
 export const CARS_UPDATE ='CARS_UPDATE';
 export const CARS_DELETE ='CARS_DELETE';
+export const CARS_EMPTY ='CARS_EMPTY';
 
 
 export class AddAction implements Action {
@@ -27,6 +26,10 @@ export class DeleteAction implements Action {
   type=CARS_DELETE;
   constructor(public payload:any ){}
 }
+export class EmptyAction implements Action {
+  type=CARS_DELETE;
+  constructor(public payload:any ){}
+}
 
-export  type CarActions =  AddAction | AddListAction  | DeleteAction | UpdateAction;
+export  type CarActions =  AddAction | AddListAction  | DeleteAction | UpdateAction | EmptyAction;
 

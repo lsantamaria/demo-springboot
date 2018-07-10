@@ -4,6 +4,8 @@ import {User} from "../../models/user";
 import {AppStore} from "../../app.store";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
+import * as raceActions from "../../stores/race.action";
+import * as carActions from "../../stores/car.action";
 //import {LogOutUserAction} from "../../stores/user.reducer";
 import {SharedService} from "../../services/shared.service";
 
@@ -33,7 +35,7 @@ export class HearderComponent implements OnInit {
         console.log(userState.user);
         this.user=userState.user;
       }
-      //this.router.navigate(["login"]);
+      this.router.navigate(["login"]);
     });
 
     this.sharedService.triggerParentMethod.subscribe( value =>{
@@ -49,7 +51,10 @@ export class HearderComponent implements OnInit {
 
 
   logout(): void{
-    this.store.dispatch(new loginActions.LogoutAction(this.user=null));
+    this.store.dispatch(new loginActions.LogoutAction(null));
+    this.store.dispatch(new raceActions.EmptyActionRace(null));
+    this.store.dispatch(new carActions.EmptyAction(null));
+    this.user= null;
     this.router.navigate(["login"]);
   }
   ngOnInit() {

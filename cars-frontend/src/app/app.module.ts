@@ -23,7 +23,6 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule,
   MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
@@ -41,6 +40,7 @@ import {
   MatStepperModule,
   MatNativeDateModule,
 } from '@angular/material';
+import {MatMenuModule} from '@angular/material/menu';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import 'hammerjs' ;
@@ -60,6 +60,8 @@ import { RacesComponent } from './components/races/races.component';
 import {reducers} from "./app.store";
 import {SharedService} from "./services/shared.service";
 import { EditCarsComponent } from './components/cars/edit-cars/edit-cars.component';
+import { EditRaceComponent } from './components/races/edit-race/edit-race.component';
+import { RaceDetailComponent } from './components/races/race-detail/race-detail.component';
 
 
 
@@ -68,7 +70,8 @@ const appRoutes: Routes = [
   { path: 'users', component: UsersComponent },
   { path: 'login', component: LoginComponent },
   { path: 'races', component: RacesComponent },
-  { path: 'cars', component: CarsComponent }
+  { path: 'cars', component: CarsComponent },
+  {path:'races/users/:id', component: RaceDetailComponent},
 ];
 
 
@@ -83,6 +86,8 @@ const appRoutes: Routes = [
     CarsComponent,
     RacesComponent,
     EditCarsComponent,
+    EditRaceComponent,
+    RaceDetailComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
