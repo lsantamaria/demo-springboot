@@ -19,4 +19,11 @@ public class User {
     @DBRef(lazy = true)
     private List<Car> cars;
 
+    @DBRef(lazy = true)
+    private List<Race> races;
+
+    public User(String name, List<Car> cars) {
+        this.name = name;
+        this.cars = cars;
+    }
 }

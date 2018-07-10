@@ -22,10 +22,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <modelmapper.version>2.0.0</modelmapper.version>
     </properties>
 
 
     <modules>
+        <module>cars-backend-mvc-jpa</module>
         <module>cars-backend-mvc-mongodb</module>
         <module>cars-frontend</module>
     </modules>
@@ -49,5 +51,6 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
+
 
 </project>
