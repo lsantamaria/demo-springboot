@@ -1,16 +1,9 @@
 package com.demosproject.springboot.carsbackend.jpa.repositories;
 
-
-import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
-import java.util.List;
+import com.demosproject.springboot.carsbackend.jpa.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepositoryJPA extends JpaRepository<User,Integer> {
-
-    List<User> findByName(String name);
-
+public interface UserRepositoryJPA extends JpaRepository<User, Long> {
 
 
 }

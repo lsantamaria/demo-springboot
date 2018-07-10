@@ -1,7 +1,14 @@
 package com.demosproject.springboot.carsbackend.jpa.infrastructure;
 
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@EnableJpaRepositories
+@Configuration
 public class Config {
+
+  @Bean
+  public ModelMapper modelMapper() {
+    return new ModelMapper();
+  }
 }
