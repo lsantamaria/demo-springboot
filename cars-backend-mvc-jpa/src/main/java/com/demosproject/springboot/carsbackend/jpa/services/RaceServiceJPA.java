@@ -1,12 +1,16 @@
 package com.demosproject.springboot.carsbackend.jpa.services;
 
 
-import com.demosproject.springboot.carsbackend.jpa.domain.model.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.RaceDto;
+import com.demosproject.springboot.carsbackend.jpa.domain.RaceFullDto;
 import com.demosproject.springboot.carsbackend.jpa.repositories.RaceRepositoryJPA;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,23 +19,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class RaceServiceJPA {
 
-    private RaceRepositoryJPA raceRepositoryJPA;
+  private ModelMapper modelMapper;
 
-    @Autowired
-    public RaceServiceJPA(RaceRepositoryJPA raceRepositoryJPA){
-        this.raceRepositoryJPA = raceRepositoryJPA;
-    }
+  private RaceRepositoryJPA raceRepositoryJPA;
 
-    public List<Race> getRaces(){
-        return this.raceRepositoryJPA.findAll();
-    }
+  @Autowired
+  public RaceServiceJPA(RaceRepositoryJPA raceRepositoryJPA, ModelMapper modelMapper) {
+    this.raceRepositoryJPA = raceRepositoryJPA;
+    this.modelMapper = modelMapper;
+  }
 
-    public Optional<Race> getRaceByID(Integer id){
-        return this.raceRepositoryJPA.findById(id);
-    }
+  public List<RaceDto> getRaces() {
+    List<Race> races = this.raceRepositoryJPA.findAll();
+    return races.stream().map(race -> modelMapper.map(race, RaceDto.class))
+        .collect(Collectors.toList());
+  }
 
-    public void saveRace(Race car){
-        this.raceRepositoryJPA.save(car);
-    }
+  public Optional<RaceFullDto> getRaceByID(Long id) {
+    Optional<Race> raceOptional = this.raceRepositoryJPA.findById(id);
+    return raceOptional.map(race -> modelMapper.map(race, RaceFullDto.class));
+  }
+
+  public void saveRace(RaceFullDto raceFullDto) {
+    Race race = modelMapper.map(raceFullDto, Race.class);
+    this.raceRepositoryJPA.save(race);
+  }
 
 }
