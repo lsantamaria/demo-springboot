@@ -7,9 +7,6 @@ import com.demosproject.springboot.carsbackend.jpa.repositories.CarRepositoryJPA
 import com.demosproject.springboot.carsbackend.jpa.repositories.RaceRepositoryJPA;
 import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
 import java.time.LocalDate;
-import java.util.Calendar;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,53 +14,51 @@ import org.springframework.stereotype.Component;
 @Component
 public class BootstrapCLR implements CommandLineRunner {
 
-    private static final int NUMBER_OF_TEST_ENTITIES = 20;
-    private final UserRepositoryJPA userRepositoryJPA;
-    private final CarRepositoryJPA carRepositoryJPA;
-    private final RaceRepositoryJPA raceRepositoryJPA;
+  private static final int NUMBER_OF_TEST_ENTITIES = 20;
 
-    @Autowired
-    public BootstrapCLR(UserRepositoryJPA userRepositoryJPA, CarRepositoryJPA carRepositoryJPA,
-                        RaceRepositoryJPA raceRepositoryJPA) {
-        this.userRepositoryJPA = userRepositoryJPA;
-        this.carRepositoryJPA = carRepositoryJPA;
-        this.raceRepositoryJPA = raceRepositoryJPA;
-    }
+  private final UserRepositoryJPA userRepositoryJPA;
+  private final CarRepositoryJPA carRepositoryJPA;
+  private final RaceRepositoryJPA raceRepositoryJPA;
 
-    @PersistenceContext
-    EntityManager entityManager;
+  @Autowired
+  public BootstrapCLR(UserRepositoryJPA userRepositoryJPA, CarRepositoryJPA carRepositoryJPA,
+      RaceRepositoryJPA raceRepositoryJPA) {
+    this.userRepositoryJPA = userRepositoryJPA;
+    this.carRepositoryJPA = carRepositoryJPA;
+    this.raceRepositoryJPA = raceRepositoryJPA;
+  }
 
-    @Override
-    public void run(String... args) {
+  @Override
+  public void run(String... args) {
 
-        carRepositoryJPA.deleteAll();
-        raceRepositoryJPA.deleteAll();
-        userRepositoryJPA.deleteAll();
+    carRepositoryJPA.deleteAll();
+    raceRepositoryJPA.deleteAll();
+    userRepositoryJPA.deleteAll();
 
-        for (int i = 0; i < NUMBER_OF_TEST_ENTITIES; i++) {
+    for (int i = 0; i < NUMBER_OF_TEST_ENTITIES; i++) {
 
+      Car honda = new
+          Car("honda-" + i, "blue", 110);
+      Car mazda = new Car("mazda-" + i, "white", 180);
+      Car ford = new Car("ford-" + i, "blue", 105);
+      Car audi = new Car("audi-" + i, "black", 200);
 
-            Car honda = new
-                    Car("honda-" + i, "blue", 110);
-            Car mazda = new Car("mazda-" + i, "white", 180);
-            Car ford = new Car("ford-" + i, "blue", 105);
-            Car audi = new Car("audi-" + i, "black", 200);
+      User user = new User();
+      user.setName("user" + i);
+      user.setPassword("password");
+      user.setEmail("user" + i + "@user.com");
+      user.addCar(honda);
+      user.addCar(audi);
+      userRepositoryJPA.save(user);
 
-            User user = new User();
-            user.setName("user1");
-            user.addCar(honda);
-            user.addCar(audi);
-            userRepositoryJPA.save(user);
+      Race race = new Race();
+      race.setName("Race-" + i);
+      race.setStartDate(LocalDate.now());
+      race.addUser(user);
 
-
-            Race race = new Race();
-            race.setName("Race-" + i);
-            race.setStartDate(LocalDate.now());
-            race.addUser(user);
-
-            raceRepositoryJPA.save(race);
-        }
-
+      raceRepositoryJPA.save(race);
 
     }
+
+  }
 }

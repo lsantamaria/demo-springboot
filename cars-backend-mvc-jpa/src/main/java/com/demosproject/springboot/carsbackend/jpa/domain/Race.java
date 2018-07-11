@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,11 +28,15 @@ public class Race implements Serializable {
   @Id
   @GeneratedValue
   private long id;
+
+  @Column
   private String name;
+
+  @Column
   private LocalDate startDate;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "race_user",
+  @JoinTable(name = "RACE_USER",
       joinColumns = @JoinColumn(name = "race_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
   )

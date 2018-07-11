@@ -1,4 +1,4 @@
-package com.demosproject.springboot.carsbackend.jpa.domain;
+package com.demosproject.springboot.carsbackend.jpa.dto;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class RaceFullDto extends RaceDto {
-
   private List<UserDto> users;
 }
