@@ -2,6 +2,7 @@ package com.demosproject.springboot.carsbackend.jpa.controllers;
 
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
+import com.demosproject.springboot.carsbackend.jpa.dto.UserId;
 import com.demosproject.springboot.carsbackend.jpa.services.RaceServiceJPA;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -58,6 +59,15 @@ public class RaceControllerJPA {
   @GetMapping(value = "/races/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public RaceFullDto getRaceById(@PathVariable String id) {
     return raceServiceJPA.getRaceByID(Long.parseLong(id));
+  }
+
+  /**
+   * Adds a user to the current race
+   */
+  @PostMapping(value = "/races/{raceId}/users", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void addUserToRace(@PathVariable String raceId, @RequestBody UserId userId) {
+    raceServiceJPA.addUserToRace(Long.parseLong(raceId), Long.parseLong(userId.getId()));
   }
 
   /**
