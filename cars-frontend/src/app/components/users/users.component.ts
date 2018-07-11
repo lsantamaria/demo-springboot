@@ -15,7 +15,7 @@ import {Subscription} from "../../../../node_modules/rxjs";
 })
 export class UsersComponent implements OnInit {
 
-  users:User[];
+  user:User;
   cars: Car[];
 
   //users:Observable<User[]>;
@@ -29,19 +29,12 @@ export class UsersComponent implements OnInit {
 
   constructor(private userService:UserService,private router : Router, private store:Store<AppStore>) {
 
-
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
-
-      if (userState.users) {
-        console.log(userState.users);
-        this.users = userState.users;
-        console.log(this.users);
+      if (userState.user) {
+        this.user = userState.user;
       }
-      //this.router.navigate(["login"]);
     });
-
   }
-
   showAllTooltips() {
     this.show = !this.show;
     if (this.show) {
@@ -52,7 +45,6 @@ export class UsersComponent implements OnInit {
       this.tooltips._results.forEach(item => item.hide());
     }
   }
-
   ngOnInit() {
   //    this.reloadData()
   }

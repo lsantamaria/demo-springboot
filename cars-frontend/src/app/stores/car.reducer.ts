@@ -12,8 +12,6 @@ const initialState: CarState ={
   cars:[],
 }
 
-
-
 export function carReducer(state: any  = initialState, action: carActions.CarActions) {
 
   switch (action.type) {
@@ -22,7 +20,8 @@ export function carReducer(state: any  = initialState, action: carActions.CarAct
     return {...state, cars: [...state.cars, action.payload]};
 
     case carActions.CARS_EMPTY:
-      return initialState;
+      return state= initialState;
+     // return Object.assign({}, state, {cars:[]});
 
     case carActions.CARS_ADD:
       return {...state, cars: [...state.cars, ...action.payload]};

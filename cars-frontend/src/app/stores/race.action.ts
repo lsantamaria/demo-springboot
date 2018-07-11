@@ -29,7 +29,7 @@ export class DeleteActionRace implements Action {
 }
 export class EmptyActionRace implements Action {
   type=RACES_EMPTY;
-  constructor(public payload:any ){}
+  constructor(public payload: any[]){}
 }
 
 export  type RaceActions =  AddActionRace | AddListActionRace  | DeleteActionRace | UpdateActionRace |EmptyActionRace;

@@ -15,9 +15,9 @@ export class RaceDetailComponent implements OnInit {
 
     this.route.params.forEach((params: Params) => {
       this.detail_id = JSON.parse((params['id']));
-      this.raceService.getRace(this.detail_id).subscribe(response => {
+      this.raceService.getRace(this.detail_id).subscribe((response:any) => {
         this.users=response.users;
-        console.log(response);
+        console.log(response.users);
       });
     });
   }

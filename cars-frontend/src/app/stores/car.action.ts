@@ -27,8 +27,8 @@ export class DeleteAction implements Action {
   constructor(public payload:any ){}
 }
 export class EmptyAction implements Action {
-  type=CARS_DELETE;
-  constructor(public payload:any ){}
+  type=CARS_EMPTY;
+  constructor(public payload: any[]){}
 }
 
 export  type CarActions =  AddAction | AddListAction  | DeleteAction | UpdateAction | EmptyAction;

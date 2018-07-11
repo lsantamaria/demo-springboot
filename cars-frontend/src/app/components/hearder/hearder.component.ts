@@ -30,14 +30,11 @@ export class HearderComponent implements OnInit {
   constructor(private store:Store<AppStore>, private sharedService:SharedService,private router : Router) {
 
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
-
       if (userState.user) {
-        console.log(userState.user);
         this.user=userState.user;
       }
       this.router.navigate(["login"]);
     });
-
     this.sharedService.triggerParentMethod.subscribe( value =>{
       if(value == true){
         // Call some method here or some piece of code
@@ -49,11 +46,10 @@ export class HearderComponent implements OnInit {
 
 //  this.sharedService.triggerParentMethod.next(true);
 
-
   logout(): void{
     this.store.dispatch(new loginActions.LogoutAction(null));
-    this.store.dispatch(new raceActions.EmptyActionRace(null));
-    this.store.dispatch(new carActions.EmptyAction(null));
+    this.store.dispatch(new raceActions.EmptyActionRace([]));
+    this.store.dispatch(new carActions.EmptyAction([]));
     this.user= null;
     this.router.navigate(["login"]);
   }
