@@ -76,8 +76,8 @@ public class RaceControllerJPA extends BaseJPAControllers {
    */
   @PostMapping(value = POST_NEW_RACE, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
-  public void saveRace(@RequestBody RaceDto race) {
-    raceServiceJPA.saveRace(race);
+  public RaceDto saveRace(@RequestBody RaceDto race) {
+    return raceServiceJPA.saveRace(race);
   }
 
   /**
