@@ -1,0 +1,68 @@
+<app-edit-race></app-edit-race>
+
+<mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectChange)="onSelectChange($event)">
+  <mat-tab label="All">
+    <!--<ng-template matTabContent>-->
+
+
+    <mat-nav-list>
+      <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let race of races">
+        <div mat-line>
+          {{ race.name }}
+        </div>
+        <p mat-line>
+          {{race.startDate }}
+        </p>
+        <button mat-icon-button #menuTrigger="matMenuTrigger"   [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onOpenMenuView(race.id)">View race detail </button>
+        <button mat-menu-item (click)="onOpenMenu(race.name)">Add on my races</button>
+      </mat-menu>
+
+      </mat-list-item>
+    </mat-nav-list>
+
+  <!--  </ng-template>-->
+  </mat-tab>
+  <mat-tab  (click)="OpenTab()" label="My Races">
+    <mat-nav-list>
+      <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let race2 of races">
+        <div mat-line>
+          {{ race2.name }}
+        </div>
+        <p mat-line>
+          {{race2.startDate }}
+        </p>
+        <button mat-icon-button #menuTrigger="matMenuTrigger"   [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onOpenMenu(race2.name)">View race detail </button>
+          <button mat-menu-item (click)="onOpenMenu(race2.name)">Add on my races</button>
+        </mat-menu>
+
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-tab>
+</mat-tab-group>
+
+
+<!--
+<mat-tab-group [(selectedIndex)]="selectedTabIndex">
+  <mat-tab label="Tab 1">
+    Tab 1 Content
+  </mat-tab>
+  <mat-tab label="Tab 2">
+    Tab 2 Content
+  </mat-tab>
+  <mat-tab label="Tab 3">
+    Tab 3 Content
+  </mat-tab>
+</mat-tab-group>
+
+https://stackblitz.com/edit/angular-material2-issue-wryjmh?file=app%2Fapp.component.ts
+-->

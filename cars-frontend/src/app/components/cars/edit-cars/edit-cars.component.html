@@ -1,0 +1,47 @@
+<div class="login-card">
+
+  <mat-card class="example-card" >
+    <mat-card-header>
+      <mat-card-title >Add a Car</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="example-form">
+
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex class="example-full-width">
+            <input matInput placeholder="brand" [(ngModel)]="brand" name="brand" >
+          </mat-form-field>
+
+          <mat-form-field fxFlex class="example-full-width">
+            <input matInput placeholder="color" [(ngModel)]="color" name="color">
+          </mat-form-field>
+
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="power" [(ngModel)]="power" name="power">
+          </mat-form-field>
+        </div>
+
+        <div class="input-row">
+
+        </div>
+      </form>
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button  (click)=add() color="primary">Add
+        <!--<app-hearder  [currentUser]='username'></app-hearder>-->
+      </button>
+
+      <button mat-raised-button (click)=cancel() color="accent">Cancel
+        <!--<app-hearder  [currentUser]='username'></app-hearder>-->
+      </button>
+
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+
+
+
+
