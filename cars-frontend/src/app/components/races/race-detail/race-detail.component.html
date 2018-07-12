@@ -1,17 +1,34 @@
 
-<!--  <mat-list role="list" *ngFor="let user of users; let i=index"">
-    <mat-list-item role="listitem">
-      <button mat-button>
-        User #{{i}} : {{user.name}}
+  <mat-card class="example-card" >
+    <mat-card-header>
+      <mat-card-title >Race detail</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h3 mat-line >Race name: {{race.name }}</h3>
+      <h3 mat-line >Start date: {{race.startDate }}</h3>
+
+
+      <mat-list role="list" *ngFor="let user of race.users ;let i=index"> <mat-list-item role="listitem">
+        <button mat-button>
+          Competitor: {{i}}: {{user.name}}
+        </button>
+      </mat-list-item>
+
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button  (click)=add() color="primary">To compete
+        <!--<app-hearder  [currentUser]='username'></app-hearder>-->
       </button>
-    </mat-list-item>
-  </mat-list>-->
+
+      <button mat-raised-button (click)=cancel() color="accent">Delete race
+        <!--<app-hearder  [currentUser]='username'></app-hearder>-->
+      </button>
+
+    </mat-card-actions>
+  </mat-card>
 
 
-  <mat-list role="list" *ngFor="let user of users ;let i=index"> <mat-list-item role="listitem">
-    <button mat-button>
-      User{{i}}: {{user.name}}
-    </button>
-  </mat-list-item>
 
-  </mat-list>
+
+

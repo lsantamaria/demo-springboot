@@ -25,9 +25,7 @@ export class EditCarsComponent implements OnInit {
   constructor(private store:Store<AppStore>, private carService:CarService) {
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
       if (userState.user) {
-        console.log(userState.user);
         this.user = userState.user;
-        console.log(this.user);
       }
     });
   }
@@ -44,7 +42,6 @@ export class EditCarsComponent implements OnInit {
       this.car.color=this.color;
       this.car.power=this.power;
       this.carService.addCar(id,this.car).subscribe((response:any)=>{
-        console.log(response);
         this.store.dispatch(new carActions.AddAction(this.car));
       });
 

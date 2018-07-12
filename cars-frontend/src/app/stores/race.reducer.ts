@@ -22,7 +22,8 @@ export function raceReducer(state: any  = initialState, action: raceActions.Race
       return {...state, races: [...state.races, action.payload]};
 
     case raceActions.RACES_EMPTY:
-      return Object.assign({}, state, {reces:[]});
+      return state= initialState;
+      //return Object.assign({}, state, {reces:[]});
 
     case raceActions.RACES_ADD:
       return {...state, races: [...state.races, ...action.payload]};

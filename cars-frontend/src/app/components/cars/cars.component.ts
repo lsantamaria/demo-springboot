@@ -44,9 +44,9 @@ export class CarsComponent  {
     this.selection.selected.forEach(item => {
       let index: number = this.data.findIndex(d => d === item);
       console.log(this.data.findIndex(d => d === item));
-      this.dataSource.data.splice(index,1);
-      this.dataSource = new MatTableDataSource<Element>(this.dataSource.data);
+     // this.dataSource.data.splice(index,1);
       this.store.dispatch(new carActions.DeleteAction(index));
+      //this.dataSource = new MatTableDataSource<Element>(this.dataSource.data);
     });
     this.selection = new SelectionModel<Element>(true, []);
   }

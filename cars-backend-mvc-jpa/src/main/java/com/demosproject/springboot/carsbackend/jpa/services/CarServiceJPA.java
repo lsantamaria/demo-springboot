@@ -80,4 +80,13 @@ public class CarServiceJPA {
     }
 
   }
+
+  /**
+   * Delete car by the given id.
+   *
+   * @param carId the car ID to delete.
+   */
+  public void deleteCar(long carId) {
+    this.carRepositoryJPA.deleteById(carId);
+  }
 }

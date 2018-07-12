@@ -81,9 +81,19 @@ public class RaceServiceJPA {
    *
    * @param raceDto the race DTO.
    */
-  public void saveRace(RaceDto raceDto) {
+  public RaceDto saveRace(RaceDto raceDto) {
     Race race = modelMapper.map(raceDto, Race.class);
-    this.raceRepositoryJPA.save(race);
+    race = this.raceRepositoryJPA.save(race);
+    return modelMapper.map(race, RaceDto.class);
+  }
+
+  /**
+   * Deletes a race with the given id.
+   *
+   * @param raceId the Race id.
+   */
+  public void deleteRace(long raceId) {
+    this.raceRepositoryJPA.deleteById(raceId);
   }
 
   /**
