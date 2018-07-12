@@ -2,9 +2,11 @@ package com.demosproject.springboot.carsbackend.jpa.services;
 
 
 import com.demosproject.springboot.carsbackend.jpa.domain.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.User;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
 import com.demosproject.springboot.carsbackend.jpa.repositories.RaceRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,10 +26,14 @@ public class RaceServiceJPA {
 
   private RaceRepositoryJPA raceRepositoryJPA;
 
+  private UserRepositoryJPA userRepositoryJPA;
+
   @Autowired
-  public RaceServiceJPA(RaceRepositoryJPA raceRepositoryJPA, ModelMapper modelMapper) {
+  public RaceServiceJPA(RaceRepositoryJPA raceRepositoryJPA, ModelMapper modelMapper,
+      UserRepositoryJPA userRepositoryJPA) {
     this.raceRepositoryJPA = raceRepositoryJPA;
     this.modelMapper = modelMapper;
+    this.userRepositoryJPA = userRepositoryJPA;
   }
 
   /**
@@ -88,5 +94,28 @@ public class RaceServiceJPA {
    */
   public void deleteRace(long raceId) {
     this.raceRepositoryJPA.deleteById(raceId);
+  }
+
+  /**
+   * Adds a user to race
+   *
+   * @param userId the user id to add.
+   */
+  public void addUserToRace(long raceId, long userId) {
+    Optional<User> optionalUser = this.userRepositoryJPA.findById(userId);
+
+    if (!optionalUser.isPresent()) {
+      throw new NoSuchElementException(String.format("User with id %d does not exist", userId));
+    } else {
+      Optional<Race> raceOptional = this.raceRepositoryJPA.findById(raceId);
+      if (raceOptional.isPresent()) {
+        Race race = raceOptional.get();
+        race.addUser(optionalUser.get());
+        this.raceRepositoryJPA.save(race);
+      } else {
+        throw new NoSuchElementException(String.format("Race with id %d does not exist", raceId));
+      }
+    }
+
   }
 }

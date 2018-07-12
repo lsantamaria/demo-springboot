@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {GLOBAL} from "./global";
+import {Car} from "../models/car";
+import {Race} from "../models/race";
 
 @Injectable()
 export class RaceService {
@@ -20,6 +22,22 @@ export class RaceService {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
     return this.http.get(this.URL +'/races/'+userId,  {headers: headers})
+     .map(res => res );
+  }
+
+  getMyRace(userId) {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    return this.http.get(this.URL +'/users/'+userId+"/races",  {headers: headers})
+      .map(res => res );
+  }
+
+  addRace( addRace:Race){
+    let json = JSON.stringify(addRace);
+    let headers = new HttpHeaders();
+    let params = json;
+    headers =  headers.set('Content-Type','application/json');
+    return this.http.post(this.URL+"/races", params, {headers: headers})
       .map(res => res );
   }
 }

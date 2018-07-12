@@ -18,61 +18,58 @@ import * as raceActions from "../../stores/race.action";
 })
 export class RacesComponent implements OnInit, OnDestroy {
 
-  users:User[];
-  cars: Car[];
-  races: any;
-  races2:any;
+  races: Array<any> = [];
+  myRaces:Race[];
+  race:any[];
   selectedTabIndex: number;
+  user;
 
   private raceStateSubscription:Subscription;
+  private userStateSubscription:Subscription;
 
-  constructor(private userService:UserService,private router : Router, private store:Store<AppStore>,private racesService:RaceService) {
-
+  constructor(private userService:UserService,private router : Router, private store:Store<AppStore>,private raceService:RaceService) {
+    this.userStateSubscription = this.store.select('userState').subscribe(userState => {
+      if (userState.user) {
+      }
+    });
+    this.raceStateSubscription = this.store.select('raceState').subscribe(raceState => {
+        this.races=raceState.races;
+        console.log(this.races);
+      });
   }
 //https://stackoverflow.com/questions/46902829/how-can-i-load-components-added-in-tab-using-angular4
 
   ngOnInit() {
     this.selectedTabIndex = 0;
-    this.racesService.getRaces().subscribe(res =>{
-      this.races=res;
-
-      for (let i in this.races) {
-        console.log(this.races[i]); // "0", "1", "2",
-        this.store.dispatch(new raceActions.AddActionRace(this.races[i]));
+    this.raceService.getRaces().subscribe((res:any) =>{
+      if (this.races.length<res.length){
+        this.store.dispatch(new raceActions.EmptyActionRace([]));
+        this.store.dispatch(new raceActions.AddListActionRace(res));
       }
-      console.log(this.races);
     });
   }
   onOpenMenu(id:any): void {
     console.log(id);
-
   }
 
   OpenTab(){
-
   }
   onOpenMenuView(idRace:any){
      let id = idRace ? idRace : null;
-  this.router.navigate(['/races/users/',id]);
+  this.router.navigate(['/races/',id]);
   }
 
   onSelectChange(event) {
+    this.selectedTabIndex = event.index;
     if (event.index == 1) {
-      console.log('Tab1 is selected!');
-      this.raceStateSubscription = this.store.select('raceState').subscribe(raceState => {
-
-        if (raceState.races) {
-          this.races = raceState.races;
-          console.log(this.races);
-        }
-        //this.router.navigate(["login"]);
+      this.raceService.getMyRace(this.user.id).subscribe((response)=>{
+        console.log(response);
       });
+      console.log('Tab1 is selected!');
     }
   }
     ngOnDestroy(){
-    /*  if(this.raceStateSubscription){
-        this.raceStateSubscription.unsubscribe();
-      }*/
+      this.store.dispatch(new raceActions.EmptyActionRace([]));
     }
 
 }

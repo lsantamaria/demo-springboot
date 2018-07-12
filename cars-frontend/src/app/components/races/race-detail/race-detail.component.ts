@@ -10,13 +10,14 @@ import {RaceService} from "../../../services/race.service";
 export class RaceDetailComponent implements OnInit {
 
   detail_id;
-  users;
+  race;
   constructor(private route: ActivatedRoute, private raceService:RaceService) {
+
 
     this.route.params.forEach((params: Params) => {
       this.detail_id = JSON.parse((params['id']));
-      this.raceService.getRace(this.detail_id).subscribe(response => {
-        this.users=response.users;
+      this.raceService.getRace(this.detail_id).subscribe((response:any) => {
+        this.race=response;
         console.log(response);
       });
     });
