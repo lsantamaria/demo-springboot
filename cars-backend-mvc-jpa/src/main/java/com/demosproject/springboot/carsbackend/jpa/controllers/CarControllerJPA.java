@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,8 @@ public class CarControllerJPA extends BaseJPAControllers {
   static final String GET_USER_CARS = BASE_PATH + "/users/{userId}/cars";
 
   static final String ADD_CAR = BASE_PATH + "/users/{userId}/cars";
+
+  static final String DELETE_CAR = BASE_PATH + "/cars/{carId}";
 
   private final CarServiceJPA carServiceJPA;
 
@@ -67,6 +70,17 @@ public class CarControllerJPA extends BaseJPAControllers {
   public void saveCar(@PathVariable String userId, @Validated @RequestBody CarDto carDto) {
     validateParams(userId);
     carServiceJPA.saveCar(Long.parseLong(userId), carDto);
+  }
+
+  /**
+   * Deletes a car.
+   *
+   * @param carId the car ID to delete.
+   */
+  @DeleteMapping(value = DELETE_CAR)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteCar(@PathVariable String carId) {
+    this.carServiceJPA.deleteCar(Long.parseLong(carId));
   }
 
   private void validateParams(String id) {

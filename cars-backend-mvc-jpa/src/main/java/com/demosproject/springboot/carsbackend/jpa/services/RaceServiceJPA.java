@@ -79,4 +79,13 @@ public class RaceServiceJPA {
     Race race = modelMapper.map(raceDto, Race.class);
     this.raceRepositoryJPA.save(race);
   }
+
+  /**
+   * Deletes a race with the given id.
+   *
+   * @param raceId the Race id.
+   */
+  public void deleteRace(long raceId) {
+    this.raceRepositoryJPA.deleteById(raceId);
+  }
 }
