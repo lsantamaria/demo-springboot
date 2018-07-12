@@ -39,6 +39,12 @@ public class Car implements Serializable {
     this.power = power;
   }
 
+  public Car(long id, String brand, String color, int power) {
+    this.brand = brand;
+    this.color = color;
+    this.power = power;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
