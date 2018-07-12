@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarRepositoryJPA extends JpaRepository<Car, Long> {
 
-
   List<Car> findByUser_Id(Long userId);
 }

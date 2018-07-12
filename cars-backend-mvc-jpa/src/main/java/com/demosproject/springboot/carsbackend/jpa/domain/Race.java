@@ -1,11 +1,13 @@
 package com.demosproject.springboot.carsbackend.jpa.domain;
 
+import com.demosproject.springboot.carsbackend.jpa.repositories.converter.LocalDateAttributeConverter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +35,7 @@ public class Race implements Serializable {
   private String name;
 
   @Column
+  @Convert(converter = LocalDateAttributeConverter.class)
   private LocalDate startDate;
 
   @ManyToMany(fetch = FetchType.LAZY)
