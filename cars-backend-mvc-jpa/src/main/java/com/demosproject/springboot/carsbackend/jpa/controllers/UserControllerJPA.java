@@ -28,18 +28,34 @@ public class UserControllerJPA extends BaseJPAControllers {
         this.userServiceJPA = userServiceJPA;
     }
 
+  /**
+   * Gets all the users.
+   *
+   * @return the users list in DTO format.
+   */
   @GetMapping(value = GET_ALL_USERS, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserDto> getUsers() {
-        return userServiceJPA.getUsers();
-    }
+  public List<UserDto> getUsers() {
+    return userServiceJPA.getUsers();
+  }
 
+  /**
+   * Gets the user that has the given id.
+   *
+   * @param id the user id.
+   * @return the user DTO.
+   */
   @GetMapping(value = GET_USER_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDto getUserById(@PathVariable String id) {
-        return userServiceJPA.getUserById(Long.parseLong(id));
-    }
+  public UserDto getUserById(@PathVariable String id) {
+    return userServiceJPA.getUserById(Long.parseLong(id));
+  }
 
+  /**
+   * Saves a new user.
+   *
+   * @param userDto the user DTO.
+   */
   @PostMapping(value = SAVE_USER, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveUser(@PathVariable User user) {
-        userServiceJPA.saveUser(user);
-    }
+  public void saveUser(@PathVariable UserDto userDto) {
+    userServiceJPA.saveUser(userDto);
+  }
 }

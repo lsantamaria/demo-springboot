@@ -47,7 +47,7 @@ public class RaceControllerJPAITest {
   private TestRestTemplate testRestTemplate;
 
   /**
-   * Save some races and test that only the ones which the user belongs are returned when getting
+   * Save some races and test that only the ones which the user belongs to are returned when getting
    * races by user.
    */
   @Test
