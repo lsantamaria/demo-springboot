@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,10 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller for operating with race entities.
  */
 @RestController
-@RequestMapping("/jpa")
-public class RaceControllerJPA {
+public class RaceControllerJPA extends BaseJPAControllers {
 
-  private final RaceServiceJPA raceServiceJPA;
+  static final String GET_ALL_RACES = BASE_PATH + "/races";
+
+  static final String POST_NEW_RACE = BASE_PATH + "/races";
+
+  static final String GET_RACES_BY_USER = BASE_PATH + "/users/{userId}/races";
+
+  static final String GET_RACE_BY_ID = BASE_PATH + "/races/{id}";
+
+  private RaceServiceJPA raceServiceJPA;
 
   public RaceControllerJPA(RaceServiceJPA raceServiceJPA) {
     this.raceServiceJPA = raceServiceJPA;
@@ -34,7 +40,7 @@ public class RaceControllerJPA {
    *
    * @return the list of Race DTOs.
    */
-  @GetMapping(value = "/races", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = GET_ALL_RACES, produces = MediaType.APPLICATION_JSON_VALUE)
   public List<RaceDto> getRaces() {
     return raceServiceJPA.getRaces();
   }
@@ -45,7 +51,7 @@ public class RaceControllerJPA {
    *
    * @return the list of Race DTOs.
    */
-  @GetMapping(value = "/users/{userId}/races", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = GET_RACES_BY_USER, produces = MediaType.APPLICATION_JSON_VALUE)
   public List<RaceDto> getUserRaces(@PathVariable @NotNull String userId) {
     return raceServiceJPA.getUserRaces(Long.parseLong(userId));
   }
@@ -56,7 +62,7 @@ public class RaceControllerJPA {
    * @param id the race identifier.
    * @return the race corresponding to the given identifier.
    */
-  @GetMapping(value = "/races/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = GET_RACE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public RaceFullDto getRaceById(@PathVariable String id) {
     return raceServiceJPA.getRaceByID(Long.parseLong(id));
   }
@@ -75,7 +81,7 @@ public class RaceControllerJPA {
    *
    * @param race the race to save.
    */
-  @PostMapping(value = "/races", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = POST_NEW_RACE, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
   public void saveRace(@RequestBody RaceDto race) {
     raceServiceJPA.saveRace(race);

@@ -55,8 +55,9 @@ public class UserServiceJPA {
     return modelMapper.map(optionalUser.get(), UserDto.class);
   }
 
-  public void saveUser(User car) {
-    this.userRepositoryJPA.save(car);
+  public void saveUser(UserDto userDto) {
+    User user = modelMapper.map(userDto, User.class);
+    this.userRepositoryJPA.save(user);
   }
 
 }

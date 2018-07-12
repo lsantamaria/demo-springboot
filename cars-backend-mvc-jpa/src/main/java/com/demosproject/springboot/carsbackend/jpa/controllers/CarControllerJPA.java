@@ -4,21 +4,27 @@ import com.demosproject.springboot.carsbackend.jpa.dto.CarDto;
 import com.demosproject.springboot.carsbackend.jpa.services.CarServiceJPA;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for retrieving car objects.
  */
 @RestController
-@RequestMapping("/jpa")
-public class CarControllerJPA {
+public class CarControllerJPA extends BaseJPAControllers {
+
+  static final String GET_CAR_BY_ID = BASE_PATH + "/cars/{carId}";
+
+  static final String GET_USER_CARS = BASE_PATH + "/users/{userId}/cars";
+
+  static final String ADD_CAR = BASE_PATH + "/users/{userId}/cars";
 
   private final CarServiceJPA carServiceJPA;
 
@@ -30,13 +36,13 @@ public class CarControllerJPA {
   /**
    * Retrieve the car that has the given id.
    *
-   * @param id the car id.
+   * @param carId the car id.
    * @return the DTO representation of the retrieved car.
    */
-  @GetMapping(value = "/cars/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public CarDto getCarById(@PathVariable String id) {
-    validateParams(id);
-    return carServiceJPA.getCarById(Long.parseLong(id));
+  @GetMapping(value = GET_CAR_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+  public CarDto getCarById(@PathVariable String carId) {
+    validateParams(carId);
+    return carServiceJPA.getCarById(Long.parseLong(carId));
   }
 
   /**
@@ -44,7 +50,7 @@ public class CarControllerJPA {
    *
    * @param userId the id of the user.
    */
-  @GetMapping(value = "/users/{userId}/cars", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = GET_USER_CARS, produces = MediaType.APPLICATION_JSON_VALUE)
   public List<CarDto> getCarsByUserId(@PathVariable String userId) {
     validateParams(userId);
     return carServiceJPA.getCarsByUserId(Long.parseLong(userId));
@@ -56,7 +62,8 @@ public class CarControllerJPA {
    * @param userId the user id that is adding the car.
    * @param carDto the new car DTO representation.
    */
-  @PostMapping(value = "/users/{userId}/cars", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = ADD_CAR, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(HttpStatus.CREATED)
   public void saveCar(@PathVariable String userId, @Validated @RequestBody CarDto carDto) {
     validateParams(userId);
     carServiceJPA.saveCar(Long.parseLong(userId), carDto);
