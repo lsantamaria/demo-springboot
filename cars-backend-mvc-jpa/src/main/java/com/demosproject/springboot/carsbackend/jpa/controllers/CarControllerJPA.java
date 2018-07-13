@@ -67,9 +67,9 @@ public class CarControllerJPA extends BaseJPAControllers {
    */
   @PostMapping(value = ADD_CAR, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
-  public void saveCar(@PathVariable String userId, @Validated @RequestBody CarDto carDto) {
+  public CarDto saveCar(@PathVariable String userId, @Validated @RequestBody CarDto carDto) {
     validateParams(userId);
-    carServiceJPA.saveCar(Long.parseLong(userId), carDto);
+    return carServiceJPA.saveCar(Long.parseLong(userId), carDto);
   }
 
   /**

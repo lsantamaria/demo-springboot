@@ -66,14 +66,16 @@ public class CarServiceJPA {
    *
    * @param carDto the car DTO representation.
    */
-  public void saveCar(long userId, CarDto carDto) {
+  public CarDto saveCar(long userId, CarDto carDto) {
     Optional<User> userOptional = userRepositoryJPA.findById(userId);
 
     if (userOptional.isPresent()) {
       Car car = modelMapper.map(carDto, Car.class);
       User user = userOptional.get();
+      car = carRepositoryJPA.save(car);
       user.addCar(car);
       userRepositoryJPA.save(user);
+      return modelMapper.map(car, CarDto.class);
     } else {
       throw new NoSuchElementException(
           String.format("Could not add a new car because user with id %d does not exist", userId));
