@@ -7,9 +7,11 @@ import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
 import com.demosproject.springboot.carsbackend.jpa.repositories.RaceRepositoryJPA;
 import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -117,5 +119,22 @@ public class RaceServiceJPA {
       }
     }
 
+  }
+
+  public void deleteUserFromRace(long raceId, long userId) {
+    Optional<User> optionalUser = this.userRepositoryJPA.findById(userId);
+
+    if (!optionalUser.isPresent()) {
+      throw new NoSuchElementException(String.format("User with id %d does not exist", userId));
+    } else {
+      Optional<Race> raceOptional = this.raceRepositoryJPA.findById(raceId);
+      if (raceOptional.isPresent()) {
+        Race race = raceOptional.get();
+        race.removeUser(optionalUser.get());
+        this.raceRepositoryJPA.save(race);
+      } else {
+        throw new NoSuchElementException(String.format("Race with id %d does not exist", raceId));
+      }
+    }
   }
 }
