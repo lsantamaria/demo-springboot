@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserId {
 
-  private String id;
+  private long id;
 }
