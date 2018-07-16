@@ -45,10 +45,10 @@ public class Config {
         return LocalDate.parse(source, format);
       }
     };
-    Converter<Set<User>, Set<UserId>> userUserIdConverter = new AbstractConverter<Set<User>, Set<UserId>>() {
+    Converter<Set<User>, Set<Long>> userUserIdConverter = new AbstractConverter<Set<User>, Set<Long>>() {
       @Override
-      protected Set<UserId> convert(Set<User> source) {
-        return source.stream().map(user -> new UserId(user.getId()))
+      protected Set<Long> convert(Set<User> source) {
+        return source.stream().map(user -> user.getId())
             .collect(Collectors.toSet());
       }
     };

@@ -17,13 +17,13 @@
       </mat-list>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button  (click)=add() color="primary">To compete
+      <button mat-raised-button  (click)=joinRace(race.id) color="primary">Join
         <!--<app-hearder  [currentUser]='username'></app-hearder>-->
       </button>
 
-      <button mat-raised-button (click)=cancel() color="accent">Delete race
-        <!--<app-hearder  [currentUser]='username'></app-hearder>-->
-      </button>
+<!--      <button mat-raised-button (click)=deteleRace(race.id, i) color="accent">Delete race
+        &lt;!&ndash;<app-hearder  [currentUser]='username'></app-hearder>&ndash;&gt;
+      </button>-->
 
     </mat-card-actions>
   </mat-card>

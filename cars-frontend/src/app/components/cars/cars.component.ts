@@ -8,6 +8,8 @@ import {AppStore} from "../../app.store";
 import {UserService} from "../../services/user.service";
 import {Subscription} from "../../../../node_modules/rxjs";
 import * as carActions from "../../stores/car.action";
+import {CarService} from "../../services/car.service";
+import {RaceService} from "../../services/race.service";
 
 @Component({
   selector: 'app-cars',
@@ -25,7 +27,14 @@ export class CarsComponent  {
     this.dataSource.paginator = this.paginator;
   }
   private carStateSubscription:Subscription;
-  constructor(private userService:UserService,private router : Router, private store:Store<AppStore>) {
+  private userStateSubscription: Subscription;
+  constructor(private userService:UserService,private router : Router, private store:Store<AppStore>, private carService:CarService) {
+
+      this.userStateSubscription = this.store.select('userState').subscribe(userState => {
+        if (!userState.user) {
+          this.router.navigate(["login"]);
+        }
+      });
     this.carStateSubscription = this.store.select('carState').subscribe(carState => {
         this.cars = carState.cars;
         this.data = Object.assign(this.cars);
@@ -42,8 +51,17 @@ export class CarsComponent  {
   }
   removeSelectedRows() {
     this.selection.selected.forEach(item => {
+
+      var idItem = item.id;
+       idItem=""+idItem;
+       console.log(idItem);
+       this.carService.deleteCar(idItem).subscribe(response=>{
+         console.log(response);
+       });
+
       let index: number = this.data.findIndex(d => d === item);
       console.log(this.data.findIndex(d => d === item));
+
      // this.dataSource.data.splice(index,1);
       this.store.dispatch(new carActions.DeleteAction(index));
       //this.dataSource = new MatTableDataSource<Element>(this.dataSource.data);

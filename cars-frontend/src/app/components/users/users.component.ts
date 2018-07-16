@@ -7,6 +7,7 @@ import {Car} from "../../models/car";
 import {Store} from "@ngrx/store";
 import {AppStore} from "../../app.store";
 import {Subscription} from "../../../../node_modules/rxjs";
+import {RaceService} from "../../services/race.service";
 
 @Component({
   selector: 'app-users',
@@ -32,9 +33,12 @@ export class UsersComponent implements OnInit {
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
       if (userState.user) {
         this.user = userState.user;
-      }
+      }else         this.router.navigate(["login"]);
     });
   }
+
+
+
   showAllTooltips() {
     this.show = !this.show;
     if (this.show) {

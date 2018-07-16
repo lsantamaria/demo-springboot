@@ -36,13 +36,12 @@ export class EditCarsComponent implements OnInit {
   add(){
     this.car = new Car();
     if(this.brand && this.color && this.power  ){
-
       let id = String(this.user.id);
       this.car.brand=this.brand;
       this.car.color=this.color;
       this.car.power=this.power;
       this.carService.addCar(id,this.car).subscribe((response:any)=>{
-        this.store.dispatch(new carActions.AddAction(this.car));
+        this.store.dispatch(new carActions.AddAction(response));
       });
 
     }else {

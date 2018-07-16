@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {RaceService} from "../../../services/race.service";
+import * as raceActions from "../../../stores/race.action";
+import {Store} from "@ngrx/store";
+import {AppStore} from "../../../app.store";
 
 @Component({
   selector: 'app-race-detail',
@@ -11,7 +14,7 @@ export class RaceDetailComponent implements OnInit {
 
   detail_id;
   race;
-  constructor(private route: ActivatedRoute, private raceService:RaceService) {
+  constructor(private route: ActivatedRoute, private raceService:RaceService, private store:Store<AppStore>) {
 
 
     this.route.params.forEach((params: Params) => {
@@ -23,6 +26,13 @@ export class RaceDetailComponent implements OnInit {
     });
   }
 
+/*  deteleRace(id, position){
+    var idRace = ""+id;
+    this.raceService.deleteRace(idRace).subscribe(response=>{
+      console.log(response);
+      this.store.dispatch(new raceActions.DeleteActionRace(position));
+    });
+  }*/
   ngOnInit() {
   }
 }

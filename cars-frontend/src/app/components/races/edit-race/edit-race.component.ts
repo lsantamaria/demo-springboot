@@ -40,7 +40,7 @@ export class EditRaceComponent implements OnInit {
       console.log("nombre...."+ this.race);
       this.raceService.addRace(this.race).subscribe((response:any)=>{
         console.log(response);
-        this.store.dispatch(new raceActions.AddActionRace(this.race));
+        this.store.dispatch(new raceActions.AddActionRace(response));
       });
 
     }

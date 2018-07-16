@@ -39,6 +39,16 @@ export class UserService {
       .map(res => res );
   }
 
+  register(user_to_login){
+    let json = JSON.stringify(user_to_login);
+    let headers = new HttpHeaders();
+    let params = json;
+    headers =  headers.set('Content-Type','application/json');
+    return this.http.post('http://localhost:8080/login', params, {headers: headers})
+    .map(res => res );
+  }
+
+
   getUsersList(): Observable<any> {
    this.usersList = new Array();
  //   this.carsList = new Array();

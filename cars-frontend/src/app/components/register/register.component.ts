@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../models/user";
-import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
-import {AppStore} from "../../app.store";
 import {Store} from "@ngrx/store";
-import * as loginActions from '../../stores/user.action'
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user";
+import {AppStore} from "../../app.store";
 import * as carActions from "../../stores/car.action";
-import {AddListAction} from "../../stores/car.action";
+import * as loginActions from "../../stores/user.action";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
+
   user:User;
   email : string
   password : string
   constructor(private userService:UserService,private router : Router, private store:Store<AppStore>,) {
   }
-  login() : void {
+  register() : void {
     this.user= new User();
     if(this.email  && this.password !=null ){
       this.user.email= this.email;

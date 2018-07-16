@@ -62,16 +62,19 @@ import {SharedService} from "./services/shared.service";
 import { EditCarsComponent } from './components/cars/edit-cars/edit-cars.component';
 import { EditRaceComponent } from './components/races/edit-race/edit-race.component';
 import { RaceDetailComponent } from './components/races/race-detail/race-detail.component';
+import { RegisterComponent } from './components/register/register.component';
+import { FilterRacePipe } from './pipes/filter-race.pipe';
 
 
 
 const appRoutes: Routes = [
   {path : '', component : LoginComponent},
-  { path: 'users', component: UsersComponent },
+  { path: 'profile', component: UsersComponent },
   { path: 'login', component: LoginComponent },
   { path: 'races', component: RacesComponent },
   { path: 'cars', component: CarsComponent },
   {path:'races/:id', component: RaceDetailComponent},
+  {path:'register', component: RegisterComponent},
 ];
 
 
@@ -88,6 +91,8 @@ const appRoutes: Routes = [
     EditCarsComponent,
     EditRaceComponent,
     RaceDetailComponent,
+    RegisterComponent,
+    FilterRacePipe,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

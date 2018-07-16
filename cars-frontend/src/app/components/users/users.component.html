@@ -123,7 +123,7 @@
 
 <mat-list role="list" >
 
-  <a  role="listitem" *ngFor="let user of users  let i=index">
+  <a  role="listitem" *ngFor="let user of users;  let i=index">
     <h3 mat-line >{{ user.name }}</h3>
 
     <table matSort (matSortChange)="sortData($event)" >

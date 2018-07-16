@@ -30,7 +30,7 @@ public class RaceControllerJPA extends BaseJPAControllers {
 
   static final String GET_RACE_BY_ID = BASE_PATH + "/races/{raceId}";
 
-  static final String DELETE_RACE = BASE_PATH + "/races/{raceId}";
+  static final String  DELETE_RACE = BASE_PATH + "/races/{raceId}";
 
   static final String ADD_USER_TO_RACE = BASE_PATH + "/races/{raceId}/users";
 

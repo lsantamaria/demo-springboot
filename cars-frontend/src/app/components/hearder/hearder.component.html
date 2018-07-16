@@ -8,7 +8,6 @@
  <div *ngIf=user>
     <button mat-button routerLink="/cars" >Cars</button>
     <button mat-button routerLink="/races" >Races</button>
-    <button mat-button  routerLink="/users" >Users</button>
     </div>
     <span class="example-fill-remaining-space"></span>
 
@@ -20,7 +19,7 @@
     </div>
 
     <div *ngIf=user>
-
+      <button mat-button  routerLink="/profile" >{{user.name}}</button>
       <button mat-button  (click)=logout() >Logout</button>
     </div>
 

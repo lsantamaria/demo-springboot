@@ -17,6 +17,14 @@ export class CarService {
     let params = json;
     headers =  headers.set('Content-Type','application/json');
     return this.http.post(this.URL+"/users/"+id+"/cars", params, {headers: headers})
-      .map(res => res );
+    .map(res => res );
   }
+
+  deleteCar(id:string){
+    let headers = new HttpHeaders();
+    headers =  headers.set('Content-Type','application/json');
+    return this.http.delete(this.URL+"/cars/"+id, {headers: headers})
+    .map(res => res );
+  }
+
 }

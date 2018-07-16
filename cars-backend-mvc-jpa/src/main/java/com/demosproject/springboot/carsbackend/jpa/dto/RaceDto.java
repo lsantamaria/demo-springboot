@@ -23,5 +23,5 @@ public class RaceDto {
   @Future
   @NotNull
   private String startDate;
-  private Set<UserId> userIds;
+  private Set<Long> userIds;
 }

@@ -1,15 +1,20 @@
-<app-edit-race></app-edit-race>
+<app-edit-race *ngIf="selectedTabIndex==0" ></app-edit-race>
 
 <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectChange)="onSelectChange($event)">
   <mat-tab label="All">
     <!--<ng-template matTabContent>-->
 
-
+   <!--  | filterRace:filterargs;[style.background-color] = "race.userIds ==user.user.id  ? 'blue' : 'green'"  <div mat-line  *ngIf="race.userIds==user.user.id" >-->
     <mat-nav-list>
-      <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let race of races">
-        <div mat-line>
-          {{ race.name }}
-        </div>
+      <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let race of races; trackBy:indexTracker; let i= index">
+        <div mat-line  [style.background-color]="race.userIds.indexOf(user.user.id) ? '':'green' ">{{race.name}}</div>
+
+    <!--   <div mat-line>{{ race.name }}</div>  <div mat-line  [style.background-color]="race.userIds.findIndex(filterargs) ? 'grey' : ''">
+          CONTIENE
+          <{{ race.name }}
+        </div>-->
+
+
         <p mat-line>
           {{race.startDate }}
         </p>
@@ -19,7 +24,8 @@
 
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="onOpenMenuView(race.id)">View race detail </button>
-        <button mat-menu-item (click)="onOpenMenu(race.name)">Add on my races</button>
+        <button mat-menu-item (click)="onOpenMenuJoin({id_race:race.id, position:i})">Join</button>
+        <button mat-menu-item (click)="onOpenMenuDelete({id_race:race.id, position:i})">Delete</button>
       </mat-menu>
 
       </mat-list-item>

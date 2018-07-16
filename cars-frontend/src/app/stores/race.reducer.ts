@@ -29,9 +29,9 @@ export function raceReducer(state: any  = initialState, action: raceActions.Race
       return {...state, races: [...state.races, ...action.payload]};
 
     case raceActions.RACES_UPDATE:
-      const car = state.races[action.payload.indexRace];
+      const race = state.races[action.payload.indexRace];
       const updatedCar = {
-        ...car,
+        ...race,
         ...action.payload.race
 
       };
@@ -41,9 +41,9 @@ export function raceReducer(state: any  = initialState, action: raceActions.Race
       };
 
     case raceActions.RACES_DELETE:
-      const oldRaces = [...state.cars];
+      const oldRaces = [...state.races];
       oldRaces.splice(action.payload, 1);
-      return {...state, cars:oldRaces
+      return {...state, races:oldRaces
       };
 
     default:

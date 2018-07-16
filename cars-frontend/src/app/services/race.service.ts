@@ -32,7 +32,7 @@ export class RaceService {
       .map(res => res );
   }
 
-  addRace( addRace:Race){
+  addRace(addRace:Race){
     let json = JSON.stringify(addRace);
     let headers = new HttpHeaders();
     let params = json;
@@ -40,4 +40,22 @@ export class RaceService {
     return this.http.post(this.URL+"/races", params, {headers: headers})
       .map(res => res );
   }
+
+  addUserToRace(object_ids){
+
+    let json = JSON.stringify(object_ids.idUser);
+    let headers = new HttpHeaders();
+    let params = json;
+    headers =  headers.set('Content-Type','application/json');
+    return this.http.post(this.URL+"/races/"+object_ids.idRace+"/users", params, {headers: headers})
+    .map(res => res );
+  }
+
+  deleteRace(id:string){
+    let headers = new HttpHeaders();
+    headers =  headers.set('Content-Type','application/json');
+    return this.http.delete(this.URL+"/races/"+id, {headers: headers})
+    .map(res => res );
+  }
+
 }
