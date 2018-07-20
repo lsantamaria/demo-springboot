@@ -5,6 +5,9 @@ import static java.util.Collections.singletonList;
 import com.demosproject.springboot.carsbackend.jpa.domain.Role;
 import com.demosproject.springboot.carsbackend.jpa.domain.User;
 import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.spring.security.filter.JWTAuthorizationFilter;
+import com.demosproject.springboot.carsbackend.jpa.spring.security.handler.CustomAuthenticationFailureHandler;
+import com.demosproject.springboot.carsbackend.jpa.spring.security.handler.CustomAuthenticationSuccessHandler;
 import java.util.HashSet;
 import java.util.Optional;
 import javax.sql.DataSource;
@@ -18,6 +21,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,17 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .dataSource(dataSource)
         .withDefaultSchema()
         .passwordEncoder(passwordEncoder());
-  }
-
-  /**
-   * Default Spring's authentication manager bean. Is the responsible of authenticating the users.
-   *
-   * @return the default AuthenticationManager
-   */
-  @Bean
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
   }
 
   /**
@@ -112,14 +105,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder(11);
   }
 
-  private AuthenticationSuccessHandler authenticationSuccessHandler() {
-    return new CustomAuthenticationSuccessHandler();
-  }
-
-  private AuthenticationFailureHandler authenticationFailureHandler() {
-    return new CustomAuthenticationFailureHandler();
-  }
-
   /**
    * General method for configuring the Spring security context. It is the equivalent of the old
    * security.xml file. It defines the permissions for accessing to all the URLs of the
@@ -129,20 +114,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
 
     http
+        .exceptionHandling()
+        .authenticationEntryPoint(authenticationEntryPoint())
+        .and()
         .authorizeRequests()
         .antMatchers("/login").permitAll()
         .antMatchers("/register").permitAll()
         .antMatchers("/").permitAll()
         .antMatchers("/h2-console").permitAll()
         .antMatchers("/h2-console/**").permitAll()
-        .antMatchers("/jpa/**").permitAll()
+        .antMatchers("/jpa/**").authenticated()
         .anyRequest().permitAll()
         .and()
         .formLogin()
-        .successHandler(authenticationSuccessHandler())
-        .failureHandler(authenticationFailureHandler())
+        .successHandler(new CustomAuthenticationSuccessHandler())
+        .failureHandler(new CustomAuthenticationFailureHandler())
         .passwordParameter("password")
         .usernameParameter("username")
+        .and()
+        .addFilter(new JWTAuthorizationFilter(super.authenticationManagerBean()))
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .csrf().disable()
         .cors()

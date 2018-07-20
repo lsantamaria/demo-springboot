@@ -1,4 +1,4 @@
-package com.demosproject.springboot.carsbackend.jpa.spring.security;
+package com.demosproject.springboot.carsbackend.jpa.spring.security.handler;
 
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 /**
  * Returns a response with UNAUTHORIZED code when authentication fails.
  */
-@Component
 public class CustomAuthenticationFailureHandler extends
     SimpleUrlAuthenticationFailureHandler {
 
