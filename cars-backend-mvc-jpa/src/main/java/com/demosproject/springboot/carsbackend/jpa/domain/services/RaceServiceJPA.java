@@ -1,12 +1,12 @@
-package com.demosproject.springboot.carsbackend.jpa.services;
+package com.demosproject.springboot.carsbackend.jpa.domain.services;
 
 
-import com.demosproject.springboot.carsbackend.jpa.domain.Race;
-import com.demosproject.springboot.carsbackend.jpa.domain.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
-import com.demosproject.springboot.carsbackend.jpa.repositories.RaceRepositoryJPA;
-import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.RaceRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.UserRepositoryJPA;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;

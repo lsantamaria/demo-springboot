@@ -1,7 +1,7 @@
 package com.demosproject.springboot.carsbackend.jpa.controllers;
 
 import com.demosproject.springboot.carsbackend.jpa.dto.UserDto;
-import com.demosproject.springboot.carsbackend.jpa.services.UserServiceJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.services.UserServiceJPA;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

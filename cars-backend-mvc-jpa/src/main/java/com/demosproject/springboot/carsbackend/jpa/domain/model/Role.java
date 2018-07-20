@@ -1,4 +1,4 @@
-package com.demosproject.springboot.carsbackend.jpa.domain;
+package com.demosproject.springboot.carsbackend.jpa.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

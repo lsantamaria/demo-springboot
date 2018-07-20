@@ -1,4 +1,4 @@
-package com.demosproject.springboot.carsbackend.jpa.domain;
+package com.demosproject.springboot.carsbackend.jpa.domain.model;
 
 import static java.util.stream.Collectors.toList;
 

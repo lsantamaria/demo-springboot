@@ -2,9 +2,9 @@ package com.demosproject.springboot.carsbackend.jpa.spring.security;
 
 import static java.util.Collections.singletonList;
 
-import com.demosproject.springboot.carsbackend.jpa.domain.Role;
-import com.demosproject.springboot.carsbackend.jpa.domain.User;
-import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Role;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.UserRepositoryJPA;
 import com.demosproject.springboot.carsbackend.jpa.spring.security.filter.JWTAuthorizationFilter;
 import com.demosproject.springboot.carsbackend.jpa.spring.security.handler.CustomAuthenticationFailureHandler;
 import com.demosproject.springboot.carsbackend.jpa.spring.security.handler.CustomAuthenticationSuccessHandler;
@@ -27,8 +27,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  * This class defines all the configuration for Spring Security module. It switches off the deffault

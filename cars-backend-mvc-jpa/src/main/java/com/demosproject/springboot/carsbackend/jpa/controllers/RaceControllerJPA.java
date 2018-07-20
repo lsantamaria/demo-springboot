@@ -2,7 +2,7 @@ package com.demosproject.springboot.carsbackend.jpa.controllers;
 
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
-import com.demosproject.springboot.carsbackend.jpa.services.RaceServiceJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.services.RaceServiceJPA;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;

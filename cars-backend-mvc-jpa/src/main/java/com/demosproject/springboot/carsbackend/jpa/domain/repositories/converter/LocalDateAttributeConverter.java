@@ -1,4 +1,4 @@
-package com.demosproject.springboot.carsbackend.jpa.repositories.converter;
+package com.demosproject.springboot.carsbackend.jpa.domain.repositories.converter;
 
 import java.sql.Date;
 import java.time.LocalDate;

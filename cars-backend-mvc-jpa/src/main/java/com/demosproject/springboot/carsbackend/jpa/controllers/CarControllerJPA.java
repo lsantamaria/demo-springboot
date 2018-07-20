@@ -1,7 +1,7 @@
 package com.demosproject.springboot.carsbackend.jpa.controllers;
 
 import com.demosproject.springboot.carsbackend.jpa.dto.CarDto;
-import com.demosproject.springboot.carsbackend.jpa.services.CarServiceJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.services.CarServiceJPA;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

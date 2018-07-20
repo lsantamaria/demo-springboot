@@ -1,6 +1,6 @@
-package com.demosproject.springboot.carsbackend.jpa.repositories;
+package com.demosproject.springboot.carsbackend.jpa.domain.repositories;
 
-import com.demosproject.springboot.carsbackend.jpa.domain.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
