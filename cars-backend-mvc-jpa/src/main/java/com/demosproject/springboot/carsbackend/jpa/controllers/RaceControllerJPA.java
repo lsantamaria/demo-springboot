@@ -5,6 +5,7 @@ import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
 import com.demosproject.springboot.carsbackend.jpa.services.RaceServiceJPA;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller for operating with race entities.
  */
 @RestController
+@RequiredArgsConstructor
 public class RaceControllerJPA extends BaseJPAControllers {
 
   static final String GET_ALL_RACES = BASE_PATH + "/races";
@@ -31,11 +33,7 @@ public class RaceControllerJPA extends BaseJPAControllers {
 
   static final String DELETE_RACE = BASE_PATH + "/races/{raceId}";
 
-  private RaceServiceJPA raceServiceJPA;
-
-  public RaceControllerJPA(RaceServiceJPA raceServiceJPA) {
-    this.raceServiceJPA = raceServiceJPA;
-  }
+  private final RaceServiceJPA raceServiceJPA;
 
   /**
    * Retrieves all the races and return its DTO simple representation.
