@@ -1,4 +1,4 @@
-package com.demosproject.springboot.carsbackend.jpa.web;
+package com.demosproject.springboot.carsbackend.jpa.spring;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

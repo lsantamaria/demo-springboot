@@ -10,29 +10,20 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class CarServiceJPA {
 
-  private CarRepositoryJPA carRepositoryJPA;
+  private final CarRepositoryJPA carRepositoryJPA;
 
-  private UserRepositoryJPA userRepositoryJPA;
+  private final UserRepositoryJPA userRepositoryJPA;
 
-  private ModelMapper modelMapper;
-
-  @Autowired
-  public CarServiceJPA(CarRepositoryJPA carRepositoryJPA, UserRepositoryJPA userRepositoryJPA,
-      ModelMapper modelMapper) {
-    this.carRepositoryJPA = carRepositoryJPA;
-    this.userRepositoryJPA = userRepositoryJPA;
-    this.modelMapper = modelMapper;
-  }
+  private final ModelMapper modelMapper;
 
   /**
    * Retrieve all the cars of the given user.

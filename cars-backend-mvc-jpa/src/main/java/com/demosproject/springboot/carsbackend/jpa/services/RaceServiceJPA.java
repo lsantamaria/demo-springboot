@@ -12,29 +12,20 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class RaceServiceJPA {
 
-  private ModelMapper modelMapper;
+  private final ModelMapper modelMapper;
 
-  private RaceRepositoryJPA raceRepositoryJPA;
+  private final RaceRepositoryJPA raceRepositoryJPA;
 
-  private UserRepositoryJPA userRepositoryJPA;
-
-  @Autowired
-  public RaceServiceJPA(RaceRepositoryJPA raceRepositoryJPA, ModelMapper modelMapper,
-      UserRepositoryJPA userRepositoryJPA) {
-    this.raceRepositoryJPA = raceRepositoryJPA;
-    this.modelMapper = modelMapper;
-    this.userRepositoryJPA = userRepositoryJPA;
-  }
+  private final UserRepositoryJPA userRepositoryJPA;
 
   /**
    * Retrieve a list of races from database and return them using {@link RaceDto} representation.
