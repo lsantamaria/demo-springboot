@@ -1,13 +1,13 @@
-package com.demosproject.springboot.carsbackend.jpa.services;
+package com.demosproject.springboot.carsbackend.jpa.domain.services;
 
 import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.demosproject.springboot.carsbackend.jpa.domain.Car;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Car;
 import com.demosproject.springboot.carsbackend.jpa.dto.CarDto;
-import com.demosproject.springboot.carsbackend.jpa.repositories.CarRepositoryJPA;
-import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.CarRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.UserRepositoryJPA;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,6 +32,7 @@ public class CarServiceJPATest {
   @Mock
   private ModelMapper modelMapper;
 
+  @Mock
   private UserRepositoryJPA userRepositoryJPA;
 
   private CarServiceJPA carServiceJPA;
@@ -39,7 +40,7 @@ public class CarServiceJPATest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    carServiceJPA = new CarServiceJPA(carRepositoryJPA,userRepositoryJPA, modelMapper);
+    carServiceJPA = new CarServiceJPA(carRepositoryJPA, userRepositoryJPA, modelMapper);
   }
 
   @Test
