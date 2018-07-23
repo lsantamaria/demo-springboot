@@ -1,4 +1,4 @@
-package com.demosproject.springboot.carsbackend.jpa.domain;
+package com.demosproject.springboot.carsbackend.jpa.domain.model;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,12 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "CAR")
 public class Car implements Serializable {
 
   @GeneratedValue
@@ -62,7 +66,6 @@ public class Car implements Serializable {
 
   @Override
   public int hashCode() {
-
     return Objects.hash(id, brand, color, power);
   }
 }

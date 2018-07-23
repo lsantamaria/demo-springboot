@@ -1,4 +1,4 @@
-package com.demosproject.springboot.carsbackend.jpa.web;
+package com.demosproject.springboot.carsbackend.jpa.spring;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/jpa/**")
+    registry.addMapping("/**")
         .allowedOrigins("http://localhost:4200")
         .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
         .allowedHeaders("X-Auth-Token", "Content-Type")

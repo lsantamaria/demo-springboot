@@ -1,34 +1,31 @@
-package com.demosproject.springboot.carsbackend.jpa.services;
+package com.demosproject.springboot.carsbackend.jpa.domain.services;
 
 
-import com.demosproject.springboot.carsbackend.jpa.domain.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
-import com.demosproject.springboot.carsbackend.jpa.repositories.RaceRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.RaceRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.UserRepositoryJPA;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class RaceServiceJPA {
 
-  private ModelMapper modelMapper;
+  private final ModelMapper modelMapper;
 
-  private RaceRepositoryJPA raceRepositoryJPA;
+  private final RaceRepositoryJPA raceRepositoryJPA;
 
-  @Autowired
-  public RaceServiceJPA(RaceRepositoryJPA raceRepositoryJPA, ModelMapper modelMapper) {
-    this.raceRepositoryJPA = raceRepositoryJPA;
-    this.modelMapper = modelMapper;
-  }
+  private final UserRepositoryJPA userRepositoryJPA;
 
   /**
    * Retrieve a list of races from database and return them using {@link RaceDto} representation.
@@ -88,5 +85,28 @@ public class RaceServiceJPA {
    */
   public void deleteRace(long raceId) {
     this.raceRepositoryJPA.deleteById(raceId);
+  }
+
+  /**
+   * Adds a user to race
+   *
+   * @param userId the user id to add.
+   */
+  public void addUserToRace(long raceId, long userId) {
+    Optional<User> optionalUser = this.userRepositoryJPA.findById(userId);
+
+    if (!optionalUser.isPresent()) {
+      throw new NoSuchElementException(String.format("User with id %d does not exist", userId));
+    } else {
+      Optional<Race> raceOptional = this.raceRepositoryJPA.findById(raceId);
+      if (raceOptional.isPresent()) {
+        Race race = raceOptional.get();
+        race.addUser(optionalUser.get());
+        this.raceRepositoryJPA.save(race);
+      } else {
+        throw new NoSuchElementException(String.format("Race with id %d does not exist", raceId));
+      }
+    }
+
   }
 }

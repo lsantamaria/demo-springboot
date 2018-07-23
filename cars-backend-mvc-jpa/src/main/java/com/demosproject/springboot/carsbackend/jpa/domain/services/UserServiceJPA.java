@@ -1,33 +1,26 @@
-package com.demosproject.springboot.carsbackend.jpa.services;
+package com.demosproject.springboot.carsbackend.jpa.domain.services;
 
 
-import com.demosproject.springboot.carsbackend.jpa.domain.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
 import com.demosproject.springboot.carsbackend.jpa.dto.UserDto;
-import com.demosproject.springboot.carsbackend.jpa.repositories.UserRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.UserRepositoryJPA;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Data
-@NoArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class UserServiceJPA {
 
-  private UserRepositoryJPA userRepositoryJPA;
+  private final UserRepositoryJPA userRepositoryJPA;
 
-  private ModelMapper modelMapper;
-
-  @Autowired
-  public UserServiceJPA(UserRepositoryJPA UserRepositoryJPA, ModelMapper modelMapper) {
-    this.userRepositoryJPA = UserRepositoryJPA;
-    this.modelMapper = modelMapper;
-  }
+  private final ModelMapper modelMapper;
 
   /**
    * Retrieve a list of user DTOs.

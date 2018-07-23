@@ -1,14 +1,15 @@
-package com.demosproject.springboot.carsbackend.jpa.services;
+package com.demosproject.springboot.carsbackend.jpa.domain.services;
 
 import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.demosproject.springboot.carsbackend.jpa.domain.Car;
-import com.demosproject.springboot.carsbackend.jpa.domain.Race;
-import com.demosproject.springboot.carsbackend.jpa.domain.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Car;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.RaceRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.UserRepositoryJPA;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
-import com.demosproject.springboot.carsbackend.jpa.repositories.RaceRepositoryJPA;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,7 +19,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -33,12 +33,15 @@ public class RaceServiceJPATest {
   @Mock
   private RaceRepositoryJPA raceRepositoryJPA;
 
-  @InjectMocks
+  @Mock
+  private UserRepositoryJPA userRepositoryJPA;
+
   private RaceServiceJPA raceServiceJPA;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
+    raceServiceJPA = new RaceServiceJPA(modelMapper, raceRepositoryJPA, userRepositoryJPA);
   }
 
   @Test
@@ -77,5 +80,4 @@ public class RaceServiceJPATest {
     Assert.assertTrue(raceDtoSet.contains(race2Dto));
 
   }
-
 }

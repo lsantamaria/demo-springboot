@@ -71,7 +71,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'races', component: RacesComponent },
   { path: 'cars', component: CarsComponent },
-  {path:'races/users/:id', component: RaceDetailComponent},
+  {path:'races/:id', component: RaceDetailComponent},
 ];
 
 

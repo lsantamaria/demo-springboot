@@ -1,6 +1,6 @@
-package com.demosproject.springboot.carsbackend.jpa.domain;
+package com.demosproject.springboot.carsbackend.jpa.domain.model;
 
-import com.demosproject.springboot.carsbackend.jpa.repositories.converter.LocalDateAttributeConverter;
+import com.demosproject.springboot.carsbackend.jpa.domain.repositories.converter.LocalDateAttributeConverter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;

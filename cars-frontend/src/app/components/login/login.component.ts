@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {AppStore} from "../../app.store";
 import {Store} from "@ngrx/store";
 import * as loginActions from '../../stores/user.action'
+import * as carActions from "../../stores/car.action";
+import {AddListAction} from "../../stores/car.action";
 
 @Component({
   selector: 'app-login',
@@ -12,27 +14,29 @@ import * as loginActions from '../../stores/user.action'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-
   user:User;
-  username : string
+  email : string
   password : string
   constructor(private userService:UserService,private router : Router, private store:Store<AppStore>,) {
-
   }
   login() : void {
     this.user= new User();
-    if(this.username == 'admin' && this.password == 'admin'){
-      this.user.name= this.username;
+    if(this.email  && this.password !=null ){
+      this.user.email= this.email;
       this.user.cars=[];
-      console.log(this.user);
-      this.store.dispatch(new loginActions.LoginAction(this.user));
-      this.router.navigate(["users"]);
-    }else {
-      alert("Invalid credentials");
+      this.user.password=this.password;
+      this.userService.login(this.user).subscribe((response:any)=>{
+        if(!response){
+          alert("Invalid format, only letters are allowed");
+        }
+        this.user=response;
+        this.store.dispatch(new loginActions.LoginAction(this.user));
+        this.store.dispatch(new carActions.AddListAction(this.user.cars));
+        this.router.navigate(["users"]);
+      });
+    }else {alert("It is necessary to fill all the fields and only letters are allowed");
     }
   }
-
   ngOnInit() {
   }
 }

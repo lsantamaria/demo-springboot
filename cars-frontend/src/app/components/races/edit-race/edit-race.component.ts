@@ -3,6 +3,7 @@ import * as raceActions from "../../../stores/race.action";
 import {AppStore} from "../../../app.store";
 import {Store} from "@ngrx/store";
 import {Race} from "../../../models/race";
+import {RaceService} from "../../../services/race.service";
 
 
 @Component({
@@ -16,23 +17,38 @@ export class EditRaceComponent implements OnInit {
   startDate2:any;
   race:Race;
 
-  constructor(private store:Store<AppStore>) { }
+  constructor(private store:Store<AppStore>, private raceService:RaceService) {}
   ngOnInit() {
   }
   add(){
     if(this.name && this.startDate2 !=null){
       this.race = new Race();
       this.race.name=this.name;
-      this.race.startDate=this.startDate2;
-      this.race.users=[];
+      var month = this.startDate2.getMonth()+1;
+      var day = this.startDate2.getUTCDate()+1;
+      var date;
+
+      if(month < 10){
+        month = "0" + month;
+      }
+      if(day < 10){
+        day = "0" + day;
+      }
+      date = ""+this.startDate2.getFullYear()+"-"+month+"-"+day+"";
+
+      this.race.startDate=date;
       console.log("nombre...."+ this.race);
-      this.store.dispatch(new raceActions.AddActionRace(this.race));
+      this.raceService.addRace(this.race).subscribe((response:any)=>{
+        console.log(response);
+        this.store.dispatch(new raceActions.AddActionRace(this.race));
+      });
+
     }
     this.name="";
-    this.startDate2="";
+    this.startDate2=null;
   }
   cancel(){
     this.name="";
-    this.startDate2="";
+    this.startDate2=null;
   }
 }

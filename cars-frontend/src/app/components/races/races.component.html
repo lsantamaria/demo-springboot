@@ -29,20 +29,20 @@
   </mat-tab>
   <mat-tab  (click)="OpenTab()" label="My Races">
     <mat-nav-list>
-      <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let race2 of races">
+      <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let myRace of myRaces">
         <div mat-line>
-          {{ race2.name }}
+          {{ myRace.name }}
         </div>
         <p mat-line>
-          {{race2.startDate }}
+          {{myRace.startDate }}
         </p>
         <button mat-icon-button #menuTrigger="matMenuTrigger"   [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="onOpenMenu(race2.name)">View race detail </button>
-          <button mat-menu-item (click)="onOpenMenu(race2.name)">Add on my races</button>
+          <button mat-menu-item (click)="onOpenMenu(myRace.name)">View race detail </button>
+          <button mat-menu-item (click)="onOpenMenu(myRace.name)">Add on my races</button>
         </mat-menu>
 
       </mat-list-item>
