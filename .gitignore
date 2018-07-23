@@ -32,6 +32,3 @@ cars-frontend/node/*
 
 */target/
 target/
-*/.mvn/
-
-.mvn/

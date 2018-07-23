@@ -1,9 +1,9 @@
 package com.demosproject.springboot.carsbackend.jpa.controllers;
 
 import com.demosproject.springboot.carsbackend.jpa.dto.CarDto;
-import com.demosproject.springboot.carsbackend.jpa.services.CarServiceJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.services.CarServiceJPA;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller for retrieving car objects.
  */
 @RestController
+@RequiredArgsConstructor
 public class CarControllerJPA extends BaseJPAControllers {
 
   static final String GET_CAR_BY_ID = BASE_PATH + "/cars/{carId}";
@@ -30,11 +31,6 @@ public class CarControllerJPA extends BaseJPAControllers {
   static final String DELETE_CAR = BASE_PATH + "/cars/{carId}";
 
   private final CarServiceJPA carServiceJPA;
-
-  @Autowired
-  public CarControllerJPA(CarServiceJPA carServiceJPA) {
-    this.carServiceJPA = carServiceJPA;
-  }
 
   /**
    * Retrieve the car that has the given id.

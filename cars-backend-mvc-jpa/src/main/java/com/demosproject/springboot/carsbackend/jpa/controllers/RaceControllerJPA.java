@@ -2,10 +2,10 @@ package com.demosproject.springboot.carsbackend.jpa.controllers;
 
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
-import com.demosproject.springboot.carsbackend.jpa.dto.UserId;
-import com.demosproject.springboot.carsbackend.jpa.services.RaceServiceJPA;
+import com.demosproject.springboot.carsbackend.jpa.domain.services.RaceServiceJPA;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller for operating with race entities.
  */
 @RestController
+@RequiredArgsConstructor
 public class RaceControllerJPA extends BaseJPAControllers {
 
   static final String GET_ALL_RACES = BASE_PATH + "/races";
@@ -30,17 +31,9 @@ public class RaceControllerJPA extends BaseJPAControllers {
 
   static final String GET_RACE_BY_ID = BASE_PATH + "/races/{raceId}";
 
-  static final String  DELETE_RACE = BASE_PATH + "/races/{raceId}";
+  static final String DELETE_RACE = BASE_PATH + "/races/{raceId}";
 
-  static final String ADD_USER_TO_RACE = BASE_PATH + "/races/{raceId}/users";
-
-  static final String DELETE_USER_FROM_RACE = BASE_PATH + "/races/{raceId}/users/{userId}";
-
-  private RaceServiceJPA raceServiceJPA;
-
-  public RaceControllerJPA(RaceServiceJPA raceServiceJPA) {
-    this.raceServiceJPA = raceServiceJPA;
-  }
+  private final RaceServiceJPA raceServiceJPA;
 
   /**
    * Retrieves all the races and return its DTO simple representation.
@@ -59,8 +52,8 @@ public class RaceControllerJPA extends BaseJPAControllers {
    * @return the list of Race DTOs.
    */
   @GetMapping(value = GET_RACES_BY_USER, produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<RaceDto> getUserRaces(@PathVariable @NotNull long userId) {
-    return raceServiceJPA.getUserRaces(userId);
+  public List<RaceDto> getUserRaces(@PathVariable @NotNull String userId) {
+    return raceServiceJPA.getUserRaces(Long.parseLong(userId));
   }
 
   /**
@@ -70,11 +63,11 @@ public class RaceControllerJPA extends BaseJPAControllers {
    * @return the race corresponding to the given identifier.
    */
   @GetMapping(value = GET_RACE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-  public RaceFullDto getRaceById(@PathVariable long raceId) {
-    return raceServiceJPA.getRaceByID(raceId);
+  public RaceFullDto getRaceById(@PathVariable String raceId) {
+    return raceServiceJPA.getRaceByID(Long.parseLong(raceId));
   }
 
-  /**
+  /**x
    * Saves a race.
    *
    * @param race the race to save.
@@ -96,27 +89,4 @@ public class RaceControllerJPA extends BaseJPAControllers {
     raceServiceJPA.deleteRace(Long.parseLong(raceId));
   }
 
-  /**
-   * Adds a user to an existing race.
-   *
-   * @param userId the user id.
-   * @param raceId the race id.
-   */
-  @PostMapping(value = ADD_USER_TO_RACE)
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void addUserToRace(@RequestBody UserId userId, @PathVariable long raceId) {
-    raceServiceJPA.addUserToRace(raceId, userId.getId());
-  }
-
-  /**
-   * Deletes a user from an existing race.
-   *
-   * @param userId the user id.
-   * @param raceId the race id.
-   */
-  @DeleteMapping(value = DELETE_USER_FROM_RACE)
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteUserFromRace(@PathVariable long userId, @PathVariable long raceId) {
-    raceServiceJPA.deleteUserFromRace(raceId, userId);
-  }
 }
