@@ -1,9 +1,8 @@
 package com.demosproject.springboot.carsbackend.jpa.spring;
 
-import com.demosproject.springboot.carsbackend.jpa.domain.Race;
-import com.demosproject.springboot.carsbackend.jpa.domain.User;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Race;
+import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
-import com.demosproject.springboot.carsbackend.jpa.dto.UserId;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;

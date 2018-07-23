@@ -53,11 +53,13 @@ public class RaceServiceJPATest {
     Car audi = new Car("audi-", "black", 200);
 
     User user1 = new User();
+    user1.setId(1);
     user1.setName("user1");
     user1.addCar(honda);
     user1.addCar(mazda);
 
     User user2 = new User();
+    user2.setId(2);
     user2.setName("user2");
     user2.addCar(ford);
     user2.addCar(audi);
@@ -67,8 +69,8 @@ public class RaceServiceJPATest {
     Race race2 = new Race(2, "Race2", LocalDate.now(),
         new HashSet<>(Collections.singletonList(user2)));
 
-    RaceDto race1Dto = new RaceDto(race1.getId(), race1.getName(), race1.getStartDate().toString());
-    RaceDto race2Dto = new RaceDto(race2.getId(), race2.getName(), race2.getStartDate().toString());
+    RaceDto race1Dto = new RaceDto(race1.getId(), race1.getName(), race1.getStartDate().toString(), new HashSet<>(Collections.singletonList(user1.getId())));
+    RaceDto race2Dto = new RaceDto(race2.getId(), race2.getName(), race2.getStartDate().toString(), new HashSet<>(Collections.singletonList(user2.getId())));
 
     when(raceRepositoryJPA.findAll()).thenReturn(asList(race1, race2));
     when(modelMapper.map(any(), any())).thenReturn(race1Dto).thenReturn(race2Dto);
