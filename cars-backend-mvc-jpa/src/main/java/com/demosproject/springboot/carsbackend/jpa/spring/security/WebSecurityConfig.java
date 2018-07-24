@@ -84,8 +84,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   /**
    * Custom Authentication Provider. It uses the UserDetailsService bean for retrieving a
-   * UserDetails instance and authenticate it through the current {@link AuthenticationManager}. An
-   * password encoder bean is supplied for dealing with the user passwords hashes.
+   * UserDetails instance and authenticate it through the current {@link AuthenticationManager}.
+   * A password encoder bean is supplied for dealing with the user passwords hashes.
    */
   private DaoAuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -115,6 +115,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .exceptionHandling()
         .authenticationEntryPoint(authenticationEntryPoint())
         .and()
+        .headers().frameOptions().sameOrigin()
+        .and()
         .authorizeRequests()
         .antMatchers("/login").permitAll()
         .antMatchers("/register").permitAll()
@@ -128,7 +130,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .successHandler(new CustomAuthenticationSuccessHandler())
         .failureHandler(new CustomAuthenticationFailureHandler())
         .passwordParameter("password")
-        .usernameParameter("username")
+        .usernameParameter("email")
         .and()
         .addFilter(new JWTAuthorizationFilter(super.authenticationManagerBean()))
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

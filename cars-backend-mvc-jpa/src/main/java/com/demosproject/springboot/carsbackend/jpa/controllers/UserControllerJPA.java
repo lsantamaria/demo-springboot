@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -44,15 +43,5 @@ public class UserControllerJPA extends BaseJPAControllers {
   @GetMapping(value = GET_USER_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
   public UserDto getUserById(@PathVariable String id) {
     return userServiceJPA.getUserById(Long.parseLong(id));
-  }
-
-  /**
-   * Saves a new user.
-   *
-   * @param userDto the user DTO.
-   */
-  @PostMapping(value = SAVE_USER, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void saveUser(@PathVariable UserDto userDto) {
-    userServiceJPA.saveUser(userDto);
   }
 }

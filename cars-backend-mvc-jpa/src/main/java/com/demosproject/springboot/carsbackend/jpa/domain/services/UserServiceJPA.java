@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Data
@@ -48,9 +49,11 @@ public class UserServiceJPA {
     return modelMapper.map(optionalUser.get(), UserDto.class);
   }
 
-  public void saveUser(UserDto userDto) {
+  public UserDto saveUser(UserDto userDto) {
     User user = modelMapper.map(userDto, User.class);
-    this.userRepositoryJPA.save(user);
+    user.setEnabled(true);
+    user = this.userRepositoryJPA.save(user);
+    return modelMapper.map(user,UserDto.class);
   }
 
 }

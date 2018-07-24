@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,7 +75,7 @@ public class RaceControllerJPA extends BaseJPAControllers {
    */
   @PostMapping(value = POST_NEW_RACE, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
-  public RaceDto saveRace(@RequestBody RaceDto race) {
+  public RaceDto saveRace(@RequestBody @Validated RaceDto race) {
     return raceServiceJPA.saveRace(race);
   }
 

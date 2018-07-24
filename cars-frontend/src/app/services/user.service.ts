@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import * as EventSource from 'eventsource';
 import {User} from "../models/user";
 import {Car} from "../models/car";
 import {GLOBAL} from "./global";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class UserService {
-  private usersList: User[]= new Array();
-  private carsList: Car[]= new Array();
+  private usersList: User[]= [];
+  private carsList: Car[]= [];
 
   user:User;
-  //private baseUrl = 'http://localhost:8080/api/users';
 
   URL:string;
   constructor(private http: HttpClient) {
@@ -31,26 +30,23 @@ export class UserService {
   }
 
   login(user_to_login){
-    let json = JSON.stringify(user_to_login);
     let headers = new HttpHeaders();
-    let params = json;
+    let params = JSON.stringify(user_to_login);
     headers =  headers.set('Content-Type','application/json');
-    return this.http.post('http://localhost:8080/login', params, {headers: headers})
+    return this.http.post(environment.apiUrl + '/login', params, {headers: headers})
       .map(res => res );
   }
 
-  register(user_to_login){
-    let json = JSON.stringify(user_to_login);
+  register(user_to_register){
     let headers = new HttpHeaders();
-    let params = json;
+    let params = JSON.stringify(user_to_register);
     headers =  headers.set('Content-Type','application/json');
-    return this.http.post('http://localhost:8080/login', params, {headers: headers})
-    .map(res => res );
+    return this.http.post(environment.apiUrl + '/register', params, {headers: headers});
   }
 
 
   getUsersList(): Observable<any> {
-   this.usersList = new Array();
+   this.usersList = [];
  //   this.carsList = new Array();
     return Observable.create((observer) => {
      /* const eventSource = new EventSource(`${this.baseUrl}`);

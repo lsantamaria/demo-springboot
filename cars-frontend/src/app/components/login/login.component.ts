@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   }
   login() : void {
     this.user= new User();
-    if(this.email  && this.password !=null ){
+    if(this.email != null && this.password != null ){
       this.user.email= this.email;
       this.user.cars=[];
       this.user.password=this.password;

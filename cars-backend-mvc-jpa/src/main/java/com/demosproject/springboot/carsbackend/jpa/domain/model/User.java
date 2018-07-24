@@ -42,7 +42,7 @@ public class User implements Serializable, UserDetails{
   @GeneratedValue
   private long id;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true, name = "username")
   private String username;
 
   @Column(nullable = false)
@@ -94,16 +94,6 @@ public class User implements Serializable, UserDetails{
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
       return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(toList());
-  }
-
-  @Override
-  public String getPassword() {
-    return password;
-  }
-
-  @Override
-  public String getUsername() {
-    return username;
   }
 
   public boolean isAccountNonLocked() {

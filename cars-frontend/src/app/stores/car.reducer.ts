@@ -21,7 +21,6 @@ export function carReducer(state: any  = initialState, action: carActions.CarAct
 
     case carActions.CARS_EMPTY:
       return state= initialState;
-     // return Object.assign({}, state, {cars:[]});
 
     case carActions.CARS_ADD:
       return {...state, cars: [...state.cars, ...action.payload]};
