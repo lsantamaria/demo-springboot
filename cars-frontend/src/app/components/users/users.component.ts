@@ -1,13 +1,11 @@
 import {Component, OnInit, ViewChildren} from '@angular/core';
-import {Observable} from "rxjs";
 import {User} from "../../models/user";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 import {Car} from "../../models/car";
 import {Store} from "@ngrx/store";
 import {AppStore} from "../../app.store";
-import {Subscription} from "../../../../node_modules/rxjs";
-import {RaceService} from "../../services/race.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-users',
@@ -19,12 +17,7 @@ export class UsersComponent implements OnInit {
   user:User;
   cars: Car[];
 
-  //users:Observable<User[]>;
-
-
   @ViewChildren('tooltip') tooltips;
-
- // items = [{ comment: "Comment1" }, { comment: "Comment2" }, { comment: "Comment3" }]
   show;
   private userStateSubscription:Subscription;
 
@@ -33,11 +26,10 @@ export class UsersComponent implements OnInit {
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
       if (userState.user) {
         this.user = userState.user;
-      }else         this.router.navigate(["login"]);
+      }else
+        this.router.navigate(["login"]);
     });
   }
-
-
 
   showAllTooltips() {
     this.show = !this.show;

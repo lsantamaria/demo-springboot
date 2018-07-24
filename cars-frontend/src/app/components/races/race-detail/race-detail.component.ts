@@ -16,7 +16,6 @@ export class RaceDetailComponent implements OnInit {
   race;
   constructor(private route: ActivatedRoute, private raceService:RaceService, private store:Store<AppStore>) {
 
-
     this.route.params.forEach((params: Params) => {
       this.detail_id = JSON.parse((params['id']));
       this.raceService.getRace(this.detail_id).subscribe((response:any) => {
