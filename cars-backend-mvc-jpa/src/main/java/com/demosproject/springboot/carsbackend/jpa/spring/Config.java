@@ -4,6 +4,7 @@ import com.demosproject.springboot.carsbackend.jpa.domain.model.Race;
 import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.UserDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
@@ -16,8 +17,22 @@ import org.modelmapper.Provider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
 @Configuration
 public class Config {
+
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurerAdapter() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+      }
+    };
+  }
 
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder(){
@@ -25,6 +40,11 @@ public class Config {
   }
 
   private static final String DATE_TIME_PATTERN = "yyyy-MM-dd";
+
+  @Bean
+  public ObjectMapper objectMapper(){
+    return new ObjectMapper();
+  }
 
   /**
    * Configuring a modelMapper bean by providing converters needed for the conversions between
@@ -53,7 +73,7 @@ public class Config {
     Converter<Set<User>, Set<Long>> userUserIdConverter = new AbstractConverter<Set<User>, Set<Long>>() {
       @Override
       protected Set<Long> convert(Set<User> source) {
-        return source.stream().map(user -> user.getId())
+        return source.stream().map(User::getId)
             .collect(Collectors.toSet());
       }
     };
@@ -74,6 +94,13 @@ public class Config {
       }
     };
 
+    Converter<String,String> stringToStringConverter = new AbstractConverter<String, String>() {
+      @Override
+      protected String convert(String source) {
+        return source;
+      }
+    };
+
     //Hash password before storing user to database
     //Change frontend email param to username
     modelMapper.createTypeMap(UserDto.class, User.class)
@@ -87,8 +114,8 @@ public class Config {
 
     modelMapper.createTypeMap(User.class, UserDto.class)
         .addMappings(
-            mapper -> mapper.map(User::getUsername, UserDto::setEmail)
-        )
+            mapper -> mapper.using(stringToStringConverter)
+            .map(User::getUsername, UserDto::setEmail))
         //Prevent the password to be returned to the client
         .addMappings(mapper -> mapper.skip(UserDto::setPassword));
 

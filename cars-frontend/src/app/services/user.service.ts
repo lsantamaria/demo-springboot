@@ -30,10 +30,13 @@ export class UserService {
   }
 
   login(user_to_login){
-    let headers = new HttpHeaders();
-    let params = JSON.stringify(user_to_login);
-    headers =  headers.set('Content-Type','application/json');
-    return this.http.post(environment.apiUrl + '/login', params, {headers: headers})
+    let body = new URLSearchParams();
+    body.set('email', user_to_login.email);
+    body.set('password', user_to_login.password);
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+    return this.http.post(environment.apiUrl + '/login', body.toString(), options)
       .map(res => res );
   }
 

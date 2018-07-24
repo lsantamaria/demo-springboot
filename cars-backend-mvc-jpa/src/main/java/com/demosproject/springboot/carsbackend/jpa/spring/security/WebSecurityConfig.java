@@ -5,16 +5,21 @@ import static java.util.Collections.singletonList;
 import com.demosproject.springboot.carsbackend.jpa.domain.model.Role;
 import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
 import com.demosproject.springboot.carsbackend.jpa.domain.repositories.UserRepositoryJPA;
+import com.demosproject.springboot.carsbackend.jpa.spring.Config;
 import com.demosproject.springboot.carsbackend.jpa.spring.security.filter.JWTAuthorizationFilter;
 import com.demosproject.springboot.carsbackend.jpa.spring.security.handler.CustomAuthenticationFailureHandler;
 import com.demosproject.springboot.carsbackend.jpa.spring.security.handler.CustomAuthenticationSuccessHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashSet;
 import java.util.Optional;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,13 +38,19 @@ import org.springframework.security.web.AuthenticationEntryPoint;
  * security settings in Spring oob.
  */
 @Configuration
+@Import(Config.class)
 @RequiredArgsConstructor
 @EnableWebSecurity(debug = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
   private final UserRepositoryJPA userRepositoryJPA;
 
   private final DataSource dataSource;
+
+  private final ModelMapper modelMapper;
+
+  private final ObjectMapper objectMapper;
+
 
   @Autowired
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -127,7 +138,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest().permitAll()
         .and()
         .formLogin()
-        .successHandler(new CustomAuthenticationSuccessHandler())
+        .successHandler(new CustomAuthenticationSuccessHandler(modelMapper, objectMapper))
         .failureHandler(new CustomAuthenticationFailureHandler())
         .passwordParameter("password")
         .usernameParameter("email")

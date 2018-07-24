@@ -6,7 +6,6 @@ import {AppStore} from "../../app.store";
 import {Store} from "@ngrx/store";
 import * as loginActions from '../../stores/user.action'
 import * as carActions from "../../stores/car.action";
-import {AddListAction} from "../../stores/car.action";
 
 @Component({
   selector: 'app-login',
@@ -15,8 +14,8 @@ import {AddListAction} from "../../stores/car.action";
 })
 export class LoginComponent implements OnInit {
   user:User;
-  email : string
-  password : string
+  email : string;
+  password : string;
   constructor(private userService:UserService,private router : Router, private store:Store<AppStore>,) {
   }
   login() : void {
@@ -29,6 +28,8 @@ export class LoginComponent implements OnInit {
         if(!response){
           alert("Invalid format, only letters are allowed");
         }
+        console.log("login successful...");
+        console.log(response);
         this.user=response;
         this.store.dispatch(new loginActions.LoginAction(this.user));
         this.store.dispatch(new carActions.AddListAction(this.user.cars));

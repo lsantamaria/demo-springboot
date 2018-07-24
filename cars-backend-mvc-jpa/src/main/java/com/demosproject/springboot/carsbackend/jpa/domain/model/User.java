@@ -42,7 +42,7 @@ public class User implements Serializable, UserDetails{
   @GeneratedValue
   private long id;
 
-  @Column(nullable = false, unique = true, name = "username")
+  @Column(nullable = false, unique = true)
   private String username;
 
   @Column(nullable = false)
@@ -63,10 +63,10 @@ public class User implements Serializable, UserDetails{
   @Column(name = "credentials_expired", columnDefinition = "boolean default 0")
   private boolean credentialsExpired;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private Set<Car> cars = new HashSet<>();
 
-  @ManyToMany(mappedBy = "", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
