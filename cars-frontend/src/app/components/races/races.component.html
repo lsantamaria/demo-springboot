@@ -5,7 +5,7 @@
 
     <mat-nav-list>
       <mat-list-item (click)="menuTrigger.openMenu()"  *ngFor="let race of races; trackBy:indexTracker; let i= index">
-        <div mat-line  [style.background-color]="race.userIds.indexOf(user.user.id) ? '':'green' ">{{race.name}}</div>
+        <div mat-line  [style.background-color]="race.userIds.indexOf(user.id) ? '':'green' ">{{race.name}}</div>
 
         <p mat-line>
           {{race.startDate }}

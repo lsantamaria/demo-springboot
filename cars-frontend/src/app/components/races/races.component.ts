@@ -28,8 +28,8 @@ export class RacesComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService, private router: Router, private store: Store<AppStore>, private raceService: RaceService) {
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
       if (userState.user) {
-        this.user = userState;
-        this.filterargs = {id: this.user.user.id};
+        this.user = userState.user;
+        this.filterargs = {id: this.user.id};
       } else
         this.router.navigate(["login"]);
     });
@@ -63,10 +63,10 @@ export class RacesComponent implements OnInit, OnDestroy {
   onOpenMenuJoin(object) {
     let idpath = "" + object.id_race;
     let updatedRace = this.races[object.position];
-    updatedRace.userIds.push(this.user.user.id);
+    updatedRace.userIds.push(this.user.id);
     let object_id = {
       idRace: idpath,
-      idUser: this.user.user.id
+      idUser: this.user.id
     };
     this.raceService.addUserToRace(object_id).subscribe(response => {
       this.store.dispatch(new raceActions.UpdateActionRace({
@@ -86,7 +86,9 @@ export class RacesComponent implements OnInit, OnDestroy {
   onSelectChange(event) {
     this.selectedTabIndex = event.index;
     if (event.index == 1) {
-      this.raceService.getMyRace(this.user.id).subscribe((response) => {
+      this.raceService.getMyRace(this.user.id).subscribe((response: any) => {
+        this.store.dispatch(new raceActions.EmptyActionRace([]));
+        this.store.dispatch(new raceActions.AddListActionRace(response));
       });
     }
   }

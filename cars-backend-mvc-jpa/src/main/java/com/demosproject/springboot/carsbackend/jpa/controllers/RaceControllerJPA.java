@@ -3,11 +3,13 @@ package com.demosproject.springboot.carsbackend.jpa.controllers;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceDto;
 import com.demosproject.springboot.carsbackend.jpa.dto.RaceFullDto;
 import com.demosproject.springboot.carsbackend.jpa.domain.services.RaceServiceJPA;
+import com.demosproject.springboot.carsbackend.jpa.dto.UserId;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +36,8 @@ public class RaceControllerJPA extends BaseJPAControllers {
 
   static final String DELETE_RACE = BASE_PATH + "/races/{raceId}";
 
+  private static final String ADD_USER_TO_RACE = BASE_PATH + "/races/{raceId}/users" ;
+
   private final RaceServiceJPA raceServiceJPA;
 
   /**
@@ -53,7 +57,7 @@ public class RaceControllerJPA extends BaseJPAControllers {
    * @return the list of Race DTOs.
    */
   @GetMapping(value = GET_RACES_BY_USER, produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<RaceDto> getUserRaces(@PathVariable @NotNull String userId) {
+  public List<RaceDto> getUserRaces(@PathVariable @NotNull final String userId) {
     return raceServiceJPA.getUserRaces(Long.parseLong(userId));
   }
 
@@ -68,15 +72,16 @@ public class RaceControllerJPA extends BaseJPAControllers {
     return raceServiceJPA.getRaceByID(Long.parseLong(raceId));
   }
 
-  /**x
-   * Saves a race.
+  /**
+   * x Saves a race.
    *
    * @param race the race to save.
    */
   @PostMapping(value = POST_NEW_RACE, consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.CREATED)
-  public RaceDto saveRace(@RequestBody @Validated RaceDto race) {
-    return raceServiceJPA.saveRace(race);
+  public RaceDto saveRace(@RequestBody @Validated final RaceDto race,
+      final Authentication authentication) {
+    return raceServiceJPA.saveRace(race, (String) authentication.getPrincipal());
   }
 
   /**
@@ -86,8 +91,20 @@ public class RaceControllerJPA extends BaseJPAControllers {
    */
   @DeleteMapping(value = DELETE_RACE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteRace(@PathVariable String raceId) {
+  public void deleteRace(@PathVariable final String raceId) {
     raceServiceJPA.deleteRace(Long.parseLong(raceId));
+  }
+
+  /**
+   * Adds a user to an existing race
+   *
+   * @param raceId the race id.
+   */
+  @PostMapping(value = ADD_USER_TO_RACE)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void addUserToRace(@PathVariable final long raceId, @RequestBody final UserId userId,
+      final Authentication authentication) {
+    raceServiceJPA.addUserToRace(raceId, userId.getId() , (String) authentication.getPrincipal());
   }
 
 }

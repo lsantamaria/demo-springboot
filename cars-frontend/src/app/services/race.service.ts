@@ -28,8 +28,7 @@ export class RaceService {
   getMyRace(userId) {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.get(this.URL +'/users/'+userId+"/races",  {headers: headers})
-      .map(res => res );
+    return this.http.get(this.URL +'/users/'+userId+"/races",  {headers: headers});
   }
 
   addRace(addRace:Race){

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Data
@@ -72,8 +73,11 @@ public class RaceServiceJPA {
    *
    * @param raceDto the race DTO.
    */
-  public RaceDto saveRace(RaceDto raceDto) {
+  public RaceDto saveRace(RaceDto raceDto, String currentUsername) {
     Race race = modelMapper.map(raceDto, Race.class);
+    //There will exist always an authenticated user
+    User currentUser = this.userRepositoryJPA.findByUsername(currentUsername).get();
+    race.getUsers().add(currentUser);
     race = this.raceRepositoryJPA.save(race);
     return modelMapper.map(race, RaceDto.class);
   }
@@ -88,16 +92,22 @@ public class RaceServiceJPA {
   }
 
   /**
-   * Adds a user to race
+   * Adds a user to a race.
    *
-   * @param userId the user id to add.
+   * @param raceId the race id.
+   * @param userId the id of the user that wants to join the race.
+   * @param username the current user username.
    */
-  public void addUserToRace(long raceId, long userId) {
-    Optional<User> optionalUser = this.userRepositoryJPA.findById(userId);
+  public void addUserToRace(long raceId, long userId,  String username) {
+    Optional<User> optionalUser = this.userRepositoryJPA.findByUsername(username);
 
     if (!optionalUser.isPresent()) {
-      throw new NoSuchElementException(String.format("User with id %d does not exist", userId));
+      throw new NoSuchElementException(String.format("User with username %s does not exist", username));
     } else {
+      User retrievedUser = optionalUser.get();
+      if(userId != retrievedUser.getId()){
+        throw new IllegalStateException("Current user does not match with the provided User id");
+      }
       Optional<Race> raceOptional = this.raceRepositoryJPA.findById(raceId);
       if (raceOptional.isPresent()) {
         Race race = raceOptional.get();
@@ -107,6 +117,11 @@ public class RaceServiceJPA {
         throw new NoSuchElementException(String.format("Race with id %d does not exist", raceId));
       }
     }
+  }
 
+  private long getCurrentUserId() {
+    User authenticatedUser = (User) SecurityContextHolder.getContext().getAuthentication()
+        .getPrincipal();
+    return authenticatedUser.getId();
   }
 }
