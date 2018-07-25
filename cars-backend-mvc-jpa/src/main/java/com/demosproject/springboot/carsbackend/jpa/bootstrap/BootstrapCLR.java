@@ -43,7 +43,7 @@ public class BootstrapCLR implements CommandLineRunner {
       Role userRole = new Role("USER");
 
       User user = new User();
-      user.setUsername("Admin-" + i);
+      user.setUsername("admin" + i + "@admin.com");
       user.setPassword("$2a$10$KCPaOMjqbPx9C4iCpB2dfO025ZMZ1Cim0BvYJTgVXx.JzgQ8ZiwWC");
       user.setName("admin" + i);
       user.addCar(honda);

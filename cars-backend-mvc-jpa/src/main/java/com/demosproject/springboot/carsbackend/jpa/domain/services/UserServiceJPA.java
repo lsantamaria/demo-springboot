@@ -1,6 +1,6 @@
 package com.demosproject.springboot.carsbackend.jpa.domain.services;
 
-
+import com.demosproject.springboot.carsbackend.jpa.domain.model.Role;
 import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
 import com.demosproject.springboot.carsbackend.jpa.dto.UserDto;
 import com.demosproject.springboot.carsbackend.jpa.domain.repositories.UserRepositoryJPA;
@@ -22,6 +22,8 @@ public class UserServiceJPA {
   private final UserRepositoryJPA userRepositoryJPA;
 
   private final ModelMapper modelMapper;
+
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
   /**
    * Retrieve a list of user DTOs.
@@ -52,8 +54,8 @@ public class UserServiceJPA {
   public UserDto saveUser(UserDto userDto) {
     User user = modelMapper.map(userDto, User.class);
     user.setEnabled(true);
+    user.addRole(new Role("USER"));
     user = this.userRepositoryJPA.save(user);
-    return modelMapper.map(user,UserDto.class);
+    return modelMapper.map(user, UserDto.class);
   }
-
 }

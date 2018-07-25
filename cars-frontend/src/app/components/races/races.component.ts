@@ -77,22 +77,8 @@ export class RacesComponent implements OnInit, OnDestroy {
     };
     this.raceService.addUserToRace(object_id).subscribe(response=>{
       console.log(response);
-
-/*
-      const race = this.races[object.position];
-      const updatedRace = {
-        ...race,
-        ...this.races
-      };
-      const races = [...this.races];
-      races[object.position]= updatedRace;*/
-
-
-
      this.store.dispatch(new raceActions.UpdateActionRace({indexRace:object.position, race:updatedRace}));
-    // this.races[object.position]=updatedRace;
     });
-
   }
   onOpenMenuDelete(object){
     console.log("idobject"+ object.id_race);
