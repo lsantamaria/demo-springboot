@@ -1,6 +1,8 @@
 package com.demosproject.springboot.carsbackend.jpa.spring.security;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
+import static java.util.Collections.unmodifiableList;
 
 import com.demosproject.springboot.carsbackend.jpa.domain.model.Role;
 import com.demosproject.springboot.carsbackend.jpa.domain.model.User;
@@ -31,6 +33,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * This class defines all the configuration for Spring Security module. It switches off the deffault
@@ -115,6 +120,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     return new BCryptPasswordEncoder(11);
   }
 
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    final CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(unmodifiableList(singletonList("*")));
+    configuration.setAllowedMethods(unmodifiableList(asList("GET", "POST", "PUT", "DELETE", "PATCH")));
+    configuration.setAllowCredentials(true);
+    configuration.setAllowedHeaders(unmodifiableList(asList("Authorization", "Cache-Control", "Content-Type")));
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }
+
   /**
    * General method for configuring the Spring security context. It is the equivalent of the old
    * security.xml file. It defines the permissions for accessing to all the URLs of the
@@ -148,7 +165,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .csrf().disable()
-        .cors()//.configurationSource(corsConfigurationSource())
+        .cors()
         .and()
         .logout().permitAll();
   }

@@ -44,11 +44,5 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
   //    this.reloadData()
   }
-/*
-  reloadData() {
-    this.users = this.userService.getUsersList();
-    console.log(this.users);
-  }
-*/
 
 }

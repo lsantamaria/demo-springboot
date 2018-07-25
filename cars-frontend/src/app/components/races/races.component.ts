@@ -16,72 +16,69 @@ import * as raceActions from "../../stores/race.action";
 export class RacesComponent implements OnInit, OnDestroy {
 
   races: Array<any> = [];
-  myRaces:Race[];
-  race:any[];
+  myRaces: Race[];
+  race: any[];
   selectedTabIndex: number;
   user;
   filterargs;
 
-  private raceStateSubscription:Subscription;
-  private userStateSubscription:Subscription;
+  private raceStateSubscription: Subscription;
+  private userStateSubscription: Subscription;
 
-  constructor(private userService:UserService,private router : Router, private store:Store<AppStore>,private raceService:RaceService) {
+  constructor(private userService: UserService, private router: Router, private store: Store<AppStore>, private raceService: RaceService) {
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
       if (userState.user) {
-        this.user=userState;
-        console.log(this.user.user.id);
-        this.filterargs= {id:this.user.user.id};
-      }else
+        this.user = userState;
+        this.filterargs = {id: this.user.user.id};
+      } else
         this.router.navigate(["login"]);
     });
-    this.raceStateSubscription = this.store.select('raceState').subscribe((raceState:any )=> {
-        this.races=raceState.races;
-        console.log(this.races);
-      });
+    this.raceStateSubscription = this.store.select('raceState').subscribe((raceState: any) => {
+      this.races = raceState.races;
+    });
 
   }
-//https://stackoverflow.com/questions/46902829/how-can-i-load-components-added-in-tab-using-angular4
 
   ngOnInit() {
     this.selectedTabIndex = 0;
-    this.raceService.getRaces().subscribe((res:any) =>{
-      if (this.races.length<res.length){
+    this.raceService.getRaces().subscribe((res: any) => {
+      if (this.races.length < res.length) {
         this.store.dispatch(new raceActions.EmptyActionRace([]));
         this.store.dispatch(new raceActions.AddListActionRace(res));
       }
     });
   }
-  onOpenMenu(id:any): void {
-    console.log(id);
+
+  onOpenMenu(id: any): void {
   }
-  OpenTab(){
+
+  OpenTab() {
   }
-  onOpenMenuView(idRace:any){
-     let id = idRace ? idRace : null;
-  this.router.navigate(['/races/',id]);
+
+  onOpenMenuView(idRace: any) {
+    let id = idRace ? idRace : null;
+    this.router.navigate(['/races/', id]);
   }
-  onOpenMenuJoin(object){
-    console.log("idobject"+ object.id_race);
-    let idpath =""+object.id_race;
-   // var updateRace = this.races[object.position].userIds.push(idpath);
+
+  onOpenMenuJoin(object) {
+    let idpath = "" + object.id_race;
     let updatedRace = this.races[object.position];
     updatedRace.userIds.push(this.user.user.id);
-    console.log("raced update...."+updatedRace.userIds);
-    let object_id={
-      idRace:idpath,
-      idUser:this.user.user.id
+    let object_id = {
+      idRace: idpath,
+      idUser: this.user.user.id
     };
-    this.raceService.addUserToRace(object_id).subscribe(response=>{
-      console.log(response);
-     this.store.dispatch(new raceActions.UpdateActionRace({indexRace:object.position, race:updatedRace}));
+    this.raceService.addUserToRace(object_id).subscribe(response => {
+      this.store.dispatch(new raceActions.UpdateActionRace({
+        indexRace: object.position,
+        race: updatedRace
+      }));
     });
   }
-  onOpenMenuDelete(object){
-    console.log("idobject"+ object.id_race);
-    let idpath =""+object.id_race;
-    console.log("object"+object.position);
-    this.raceService.deleteRace(idpath).subscribe(response=>{
-      console.log(response);
+
+  onOpenMenuDelete(object) {
+    let idpath = "" + object.id_race;
+    this.raceService.deleteRace(idpath).subscribe(response => {
       this.store.dispatch(new raceActions.DeleteActionRace(object.position));
     });
   }
@@ -89,14 +86,15 @@ export class RacesComponent implements OnInit, OnDestroy {
   onSelectChange(event) {
     this.selectedTabIndex = event.index;
     if (event.index == 1) {
-      this.raceService.getMyRace(this.user.id).subscribe((response)=>{
-        console.log(response);
+      this.raceService.getMyRace(this.user.id).subscribe((response) => {
       });
     }
   }
-    ngOnDestroy(){
-      this.store.dispatch(new raceActions.EmptyActionRace([]));
-    }
+
+  ngOnDestroy() {
+    this.store.dispatch(new raceActions.EmptyActionRace([]));
+  }
+
   indexTracker(index: number, value: any) {
     return index;
   }

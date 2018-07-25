@@ -20,18 +20,9 @@ export class RaceDetailComponent implements OnInit {
       this.detail_id = JSON.parse((params['id']));
       this.raceService.getRace(this.detail_id).subscribe((response:any) => {
         this.race=response;
-        console.log(response);
       });
     });
   }
-
-/*  deteleRace(id, position){
-    var idRace = ""+id;
-    this.raceService.deleteRace(idRace).subscribe(response=>{
-      console.log(response);
-      this.store.dispatch(new raceActions.DeleteActionRace(position));
-    });
-  }*/
   ngOnInit() {
   }
 }
