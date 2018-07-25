@@ -13,16 +13,16 @@ import {AppStore} from "./app.store";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  user:User;
-  private userStateSubscription:Subscription;
+  user: User;
+  private userStateSubscription: Subscription;
 
-  constructor(private userService:UserService,private router : Router, private store:Store<AppStore>) {
+  constructor(private userService: UserService, private router: Router, private store: Store<AppStore>) {
 
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
       if (userState.user) {
-        this.user=userState.user;
-        this.router.navigate(["profile"]);
-      }else
+        this.user = userState.user;
+        this.router.navigate(["cars"]);
+      } else
         this.router.navigate(["login"]);
     });
   }

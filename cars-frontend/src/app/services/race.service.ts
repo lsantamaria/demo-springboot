@@ -42,7 +42,6 @@ export class RaceService {
   }
 
   addUserToRace(object_ids){
-
     let json = JSON.stringify(object_ids.idUser);
     let headers = new HttpHeaders();
     let params = json;

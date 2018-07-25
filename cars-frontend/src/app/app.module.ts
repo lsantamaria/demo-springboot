@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RouterModule,Routes} from  '@angular/router';
 import {StoreModule} from "@ngrx/store";
 
@@ -64,12 +64,13 @@ import { EditRaceComponent } from './components/races/edit-race/edit-race.compon
 import { RaceDetailComponent } from './components/races/race-detail/race-detail.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FilterRacePipe } from './pipes/filter-race.pipe';
+import {CarsAPIInterceptor} from "./components/interceptors/CarsAPIInterceptor";
 
 
 
 const appRoutes: Routes = [
   {path : '', component : LoginComponent},
-  { path: 'profile', component: UsersComponent },
+  // { path: 'profile', component: UsersComponent },
   { path: 'login', component: LoginComponent },
   { path: 'races', component: RacesComponent },
   { path: 'cars', component: CarsComponent },
@@ -135,7 +136,11 @@ const appRoutes: Routes = [
     StoreModule.forRoot(reducers),
   ],
   exports:[MatButtonModule,MatToolbarModule,MatListModule,MatTableModule],
-  providers: [UserService,CarService,RaceService, SharedService],
+  providers: [UserService,CarService,RaceService, SharedService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: CarsAPIInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

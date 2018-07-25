@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -98,7 +97,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
    * UserDetails instance and authenticate it through the current {@link AuthenticationManager}.
    * A password encoder bean is supplied for dealing with the user passwords hashes.
    */
-  private DaoAuthenticationProvider authenticationProvider() {
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
     daoAuthenticationProvider.setUserDetailsService(userDetailsService());
     daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -110,7 +110,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
    *
    * @return an instance of BCryptPasswordEncoder
    */
-  private PasswordEncoder passwordEncoder() {
+  @Bean
+  public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder(11);
   }
 
@@ -147,7 +148,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .csrf().disable()
-        .cors()
+        .cors()//.configurationSource(corsConfigurationSource())
         .and()
         .logout().permitAll();
   }

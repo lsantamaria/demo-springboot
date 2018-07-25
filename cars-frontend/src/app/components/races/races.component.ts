@@ -1,16 +1,12 @@
-import {Component, OnInit, ViewChildren, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {User} from "../../models/user";
-import {Car} from "../../models/car";
 import {Router} from "@angular/router";
 import {AppStore} from "../../app.store";
 import {UserService} from "../../services/user.service";
-import {Observable, Subscription} from "../../../../node_modules/rxjs";
+import {Subscription} from "rxjs/Subscription";
 import {RaceService} from "../../services/race.service";
 import {Race} from "../../models/race";
-import {MatMenuTrigger} from "@angular/material";
 import * as raceActions from "../../stores/race.action";
-import {UpdateActionRace} from "../../stores/race.action";
 
 @Component({
   selector: 'app-races',
@@ -32,7 +28,7 @@ export class RacesComponent implements OnInit, OnDestroy {
   constructor(private userService:UserService,private router : Router, private store:Store<AppStore>,private raceService:RaceService) {
     this.userStateSubscription = this.store.select('userState').subscribe(userState => {
       if (userState.user) {
-        this.user=userState
+        this.user=userState;
         console.log(this.user.user.id);
         this.filterargs= {id:this.user.user.id};
       }else
@@ -96,7 +92,6 @@ export class RacesComponent implements OnInit, OnDestroy {
       this.raceService.getMyRace(this.user.id).subscribe((response)=>{
         console.log(response);
       });
-      console.log('Tab1 is selected!');
     }
   }
     ngOnDestroy(){

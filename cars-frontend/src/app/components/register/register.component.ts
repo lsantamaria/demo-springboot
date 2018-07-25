@@ -6,7 +6,7 @@ import {User} from "../../models/user";
 import {AppStore} from "../../app.store";
 import * as carActions from "../../stores/car.action";
 import * as loginActions from "../../stores/user.action";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-register',
@@ -31,21 +31,24 @@ export class RegisterComponent implements OnInit {
       this.user.password = this.password;
       this.user.name = this.name;
       this.userService.register(this.user).subscribe(
-        (response: User) => {
+        (response) => {
           if (!response) {
             alert("Error registering user. Please try it again");
           }
-          this.user = response;
+
+          let authToken = response.headers.get("Authorization");
+          this.user = response.body;
+
+          localStorage.setItem(this.user.email, authToken);
           this.store.dispatch(new loginActions.LoginAction(this.user));
           this.store.dispatch(new carActions.AddListAction(this.user.cars));
-          this.router.navigate(["profile"]);
+          this.router.navigate(["cars"]);
         },
         (error: HttpErrorResponse) => {
           console.log("ERROR response:");
           console.log(error);
-          if (error.status != 200) {
-            alert("Error registering user . Please try it again");
-          }
+          alert("Error registering user . Please try it again");
+
         }
       );
     } else {

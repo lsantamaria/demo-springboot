@@ -45,6 +45,8 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         .compact();
 
     response.addHeader(AUTHORIZATION_HEADER, TOKEN_PREFIX + token);
+    response.addHeader("Access-Control-Expose-Headers", "Authorization");
+    //response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
     response.getWriter().write(getUserDtoJsonFromAuthentication(authentication));
     response.flushBuffer();
 
